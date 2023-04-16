@@ -1,0 +1,117 @@
+@charset "UTF-8";
+
+header a, header a:visited, header a:active {
+  text-decoration: none !important;
+  cursor: pointer; 
+}
+
+header a:visited {
+  color: #0000EE; 
+}
+
+header a:active {
+  color: #0000EE; 
+}
+
+#li_top_of_submenu a {
+  color: link; 
+}
+
+/* Настройка фона навигационной панели */
+header div {
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  background-color: burlywood;
+  width: 90%;
+  margin: 0 auto; 
+}
+
+/* Настройка главного заголовка */
+header h1 {
+  text-align: center;
+  margin: 0 auto;
+  color: white; 
+}
+
+/* Настройка элемента перечисления */
+header ul {
+  list-style-type: none;
+  display: flex;
+  padding: 5px;
+  margin-right: 2%;
+  margin-left: 2%; 
+}
+
+/* Настройка элементов перечисления */
+header ul li {
+  flex-basis: auto;
+  flex-grow: 1;
+  padding: 7px; 
+}
+
+/* Отступы от краёв для всего содержимого страницы */
+main {
+  margin: 5%; 
+}
+
+.submenu {
+  display: none;
+  position: absolute;
+  top: 30px; 
+}
+
+.submenu li {
+  background-color: burlywood; 
+}
+
+.submenu li:last-child {
+  background-color: burlywood;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px; 
+}
+
+li img {
+  width: 20px;
+  height: 20px;
+  border: 0px; 
+}
+
+.correct {
+  outline: 1px solid green; 
+}
+
+.uncorrect {
+  outline: 1px solid red; 
+}
+
+.visible {
+  display: block; 
+}
+
+.unvisible {
+  display: none; 
+}
+
+.error {
+  color: red; 
+}
+
+.local-story img {
+  position: relative;
+  left: 0px;
+  top: 0px;
+  width: 35px;
+  height: 35px;
+  border: 0px; 
+}
+
+.local-story a, .local-story header a:visited, header .local-story a:visited, .local-story header a:active, header .local-story a:active {
+  position: relative;
+  top: 8px; 
+}
+
+.local-story {
+  position: relative;
+  cursor: pointer;
+  background-color: transparent; 
+}
