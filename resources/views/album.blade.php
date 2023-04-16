@@ -11,11 +11,16 @@
 @section('body')
     <?php 
         echo '<div class="grid-container">';
-        // echo Photo::FILENAMES;
-        for ($i = 1; $i <= 15; $i++){
+        
+        // Подключаем массивы из модуля Photot
+        $fn = Photo::FILENAMES;
+        $an = Photo::ALTNAMES;
+        $tn = Photo::TITLENAMES;
+
+        for ($i = 0; $i < 15; $i++){
             echo '<figure>';
-            echo    "<img src=\"img/icon_$i.png\" alt=\"icon_$i.png\" title=\"icon_$i.png\">";
-            echo    "<figcaption> icon_$i </figcaption>";
+            echo    "<img src=\"source/img/{$fn[$i]}\" alt=\"{$an[$i]}\" title=\"{$tn[$i]}\">";
+            echo    "<figcaption> {$tn[$i]} </figcaption>";
             echo '</figure>';
         }
         echo '</div>';
