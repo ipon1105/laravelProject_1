@@ -19,3 +19,5 @@ Route::get('/hobby',    [HobbyController::class,    'show'])->name('hobby');
 Route::get('/album',    [AlbumController::class,    'show'])->name('album');
 Route::get('/study',    [StudyController::class,    'show'])->name('study');
 Route::get('/test',     [TestController::class,     'show'])->name('test');
+
+Route::post('/contact/submit',  [ContactController::class,  'submit'])->name('contact-form');
