@@ -4,6 +4,10 @@
     Мои интересы
 @endsection
 
+@section('links')
+    <link rel="stylesheet" type="text/css" href="{{ url('css/hobby.css') }}" >
+@endsection
+
 @section('body')
 
     <?php 
@@ -32,7 +36,7 @@
                 }
             }
         }
-        echo "<div class=\"box\">";
+        
         contents($titles);
         content_($titles, $texts);
     ?>
