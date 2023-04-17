@@ -5,27 +5,34 @@
 @endsection
 
 @section('body')
-    
-@if($errors->any())
-<div class="alert">
-    <ul>
-        @foreach($errors->all() as $e)
-        <li>{{ $e }}</li>
-        @endforeach
-    </ul>
-</div>
-@endif
+    <!-- Успех -->
+    @if (session('success'))
+        <div class="alert alert-success" role="alert">
+            <ul><li>{{ session('success') }}</li></ul>
+        </div>
+    @endif
+
+    <!-- Ошибки -->
+    @if($errors->any())
+    <div class="alert alert-error">
+        <ul>
+            @foreach($errors->all() as $e)
+            <li>{{ $e }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
 <main>
 
     <!-- mailto:my_world1105@mail.ru?subject=Тест по 'Чиленные методы в информатике' -->
     <form id="form" action="{{ route('test-form') }}" method="POST">
-        @csrf    
+        @csrf
         <!-- Данные пользователя -->
         <div>
             <fieldset>
                 <legend>Данные пользователя</legend>
                 <div class="box">Ваше ФИО: <input id="fio_1" type="text" name="fio"
-                        placeholder="Коновалов Иван Викторович"></div>
+                        placeholder="Коновалов Иван Викторович" value="{{ old('fio') }}"></div>
                 <div class="box">Ваша группа:
                     <select name="group">
                         <option value="001">ПИ/Б-20-1-о</option>

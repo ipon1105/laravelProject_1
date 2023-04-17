@@ -11,5 +11,7 @@ class ContactController extends Controller {
 
     public function submit(ContactRequest $request){
         $request->validated();
+
+        return redirect()->route('contact')->with('success', 'Мы свяжемся с Вами');
     }
 }

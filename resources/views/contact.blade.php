@@ -27,8 +27,17 @@
 
     <!-- action="mailto:my_world1105@mail.ru?subject=FeedBack" -->
     <!-- /contact/submit -->
+    
+    <!-- Успех -->
+    @if (session('success'))
+        <div class="alert alert-success" role="alert">
+            <ul><li>{{ session('success') }}</li></ul>
+        </div>
+    @endif
+
+    <!-- Ошибки -->
     @if($errors->any())
-    <div class="alert">
+    <div class="alert alert-error">
         <ul>
             @foreach($errors->all() as $e)
             <li>{{ $e }}</li>
@@ -46,19 +55,19 @@
             <!-- Фамилия Имя Отчество -->
             <div class="box">
                 <label for="fio">Ваше ФИО:</label>
-                <input id="fio" type="text" name="fio" placeholder="Коновалов Иван Викторович" >
+                <input id="fio" type="text" name="fio" placeholder="Коновалов Иван Викторович" value="{{ old('fio') }}" >
             </div>
 
             <!-- Дата рождения -->
             <div class="box">
                 <label for="my_date">Дата рождения:</label>
-                <input id="my_date" type="text" name="date" placeholder="ММ/ДД/ГГГГ">
+                <input id="my_date" type="text" name="date" placeholder="ММ/ДД/ГГГГ" value="{{ old('date')}}">
             </div>
 
             <!-- Номер телефона -->
             <div class="box">
                 <label for="tel">Телефон:</label>
-                <input id="tel" type="tel" name="tel" placeholder="+78005553535"> 
+                <input id="tel" type="tel" name="tel" placeholder="+78005553535" value="{{ old('tel')}}"> 
             </div>
                 
             <!-- Пол -->
@@ -73,7 +82,7 @@
             <!-- Почта -->
             <div class="box">
                 <label for="email">Email для связи:</label>
-                <input id="email" type="email" name="email" placeholder="Адрес электронной почты">
+                <input id="email" type="email" name="email" placeholder="Адрес электронной почты" value="{{ old('email')}}">
             </div>
 
             <!-- Возраст -->

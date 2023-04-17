@@ -126,7 +126,7 @@ li img {
   margin-top: 8px;
 }
 
-/* Для ошибок */
+/* Для предупреждений */
 div.alert{
   /* Внешние отступы */
   margin-left: 100px;
@@ -138,6 +138,14 @@ div.alert{
   padding-top: 5px;
   padding-bottom: 5px;
 
-  background-color: pink;
   border-radius: 15px;
+}
+
+div.alert-error{
+  background-color: pink;
+}
+
+div.alert-success{
+  background-color: rgb(196, 255, 107);
+  padding: 5px;
 }
