@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
-// use Illuminate\Http\Request;
+use App\Http\Requests\TestRequest;
 
 class TestController extends Controller {
     public function show() {
         return view('test');
+    }
+
+    public function submit(TestRequest $request){
+        $request->validated();
     }
 }

@@ -21,3 +21,4 @@ Route::get('/study',    [StudyController::class,    'show'])->name('study');
 Route::get('/test',     [TestController::class,     'show'])->name('test');
 
 Route::post('/contact/submit',  [ContactController::class,  'submit'])->name('contact-form');
+Route::post('/test/submit',     [TestController::class,     'submit'])->name('test-form');

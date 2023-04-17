@@ -51,7 +51,8 @@ header ul li {
 
 /* Отступы от краёв для всего содержимого страницы */
 main {
-  margin: 5%; 
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
 .submenu {
