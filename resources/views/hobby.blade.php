@@ -9,7 +9,7 @@
 @endsection
 
 @section('body')
-
+    <main>
     <?php 
         $titles = Interest::TITLELIST;
         $texts  = Interest::TEXTLIST;
@@ -40,4 +40,5 @@
         contents($titles);
         content_($titles, $texts);
     ?>
+    </main>
 @endsection

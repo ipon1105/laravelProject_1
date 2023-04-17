@@ -37,6 +37,7 @@
     </div>
     @endif
 
+    <main>
     <form id="form" action="{{ route('contact-form') }}" method="POST">
         @csrf
         <fieldset>
@@ -95,5 +96,6 @@
             </div>
         </fieldset>
     </form>
+</main>
    
 @endsection

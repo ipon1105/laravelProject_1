@@ -1,0 +1,40 @@
+body table {
+    width: 100%;
+    margin: 10px auto;
+    border: 1px solid black;
+    border-spacing: 0;
+}
+
+thead th {
+    vertical-align: top;
+    border: 1px solid black;
+}
+
+thead td {
+    text-align: center;
+    border: 1px solid black;
+}
+
+td {
+    text-align: right;
+    border: 1px solid black;
+}
+
+tr {
+    border: 1px solid black;
+}
+
+tbody th {
+    text-align: center;
+    border: 1px solid black;
+}
+
+td.name {
+    text-align: left;
+    border: 1px solid black;
+}
+
+td.k {
+    text-align: center;
+    border: 1px solid black;
+}

@@ -9,6 +9,7 @@
 @endsection
 
 @section('body')
+    <main>
     <?php 
         echo '<div class="grid-container">';
         
@@ -25,4 +26,5 @@
         }
         echo '</div>';
     ?>
+    </main>
 @endsection
