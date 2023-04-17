@@ -12,7 +12,7 @@
     <?php 
         echo '<div class="grid-container">';
         
-        // Подключаем массивы из модуля Photot
+        // Подключаем массивы из модуля Photo
         $fn = Photo::FILENAMES;
         $an = Photo::ALTNAMES;
         $tn = Photo::TITLENAMES;
