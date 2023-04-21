@@ -10,35 +10,20 @@
 
 @section('body')
     <main>
-    <?php 
-        $titles = Interest::TITLELIST;
-        $texts  = Interest::TEXTLIST;
+        @foreach ($titleLists as $key => $value)
+            <ul>
+                <li>
+                    <a href="#{{$key}}">{{$value}}</a>
+                </li>
+            </ul>
+        @endforeach
 
-        // Фукнция для отрисовки Содержания
-        function contents($titles){
-            echo "<ul>";
-            foreach ($titles as $key => $value) {
-                echo "<li>";
-                echo    "<a href=\"#$key\">$value</a>";
-                echo "</li>";
-            }
-            echo "</ul>";
-        }
-
-        // Фукнция для отрисовки содержимого
-        function content_($titles, $texts){
-            foreach ($titles as $id => $contents) {
-                echo "<h1 id=\"$id\">$contents</h1>";
-
-                foreach ($texts[$id] as $key => $value){
-                    echo "<h2>$key</h2>";
-                    echo "<p>$value</p>";
-                }
-            }
-        }
-        
-        contents($titles);
-        content_($titles, $texts);
-    ?>
+        @foreach ($titleLists as $id => $contents)
+            <h1 id="{{$id}}">{{$contents}}</h1>
+            @foreach ($textLists[$id] as $key => $value)
+                <h2>{{$key}}</h2>
+                <p>{{$value}}</p>
+            @endforeach
+        @endforeach
     </main>
 @endsection
