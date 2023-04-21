@@ -28,3 +28,4 @@ class TestController extends Controller {
 }
 /*
 Рализовать всю проверку с помощью встроенных правил валидации Laravel
+*/
