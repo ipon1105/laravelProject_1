@@ -1,10 +1,10 @@
 @section('header')
 <header>
         <div>
-            <div class="local-story">
+            <!-- <div class="local-story">
                 <img src="source/img/icon_1.png">
                 <a href="history">История просмотра</a>
-            </div>
+            </div> -->
             <h1 id="page">@yield('title')</h1>
             <!-- Навигация с гиперссылками -->
             <nav>

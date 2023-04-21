@@ -10,21 +10,13 @@
 
 @section('body')
     <main>
-    <?php 
-        echo '<div class="grid-container">';
-        
-        // Подключаем массивы из модуля Photo
-        $fn = Photo::FILENAMES;
-        $an = Photo::ALTNAMES;
-        $tn = Photo::TITLENAMES;
-
-        for ($i = 0; $i < 15; $i++){
-            echo '<figure>';
-            echo    "<img src=\"source/img/{$fn[$i]}\" alt=\"{$an[$i]}\" title=\"{$tn[$i]}\">";
-            echo    "<figcaption> {$tn[$i]} </figcaption>";
-            echo '</figure>';
-        }
-        echo '</div>';
-    ?>
+    <div class="grid-container">
+        @foreach ($photos as $i)
+            <figure>
+                <img src="source/img/{{$i[0]}}" alt="{{$i[1]}}" title="{{$i[2]}}">
+                <figcaption> {{$i[2]}} </figcaption>
+            </figure>
+        @endforeach
+    </div>
     </main>
 @endsection
