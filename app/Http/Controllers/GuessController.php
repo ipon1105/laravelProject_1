@@ -29,6 +29,8 @@ class GuessController extends Controller
     }
 
     public function all(){
-        return redirect()->route('guess')->with('feedbacks', Feedback::all());
+        $data = new Feedback;
+        
+        return redirect()->route('guess')->with('feedbacks',  $data->orderBy('created_at', 'desc')->get());
     }
 }
