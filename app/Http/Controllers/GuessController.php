@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Feedback;
+use App\Http\Requests\GuessRequest;
 
 class GuessController extends Controller
 {
@@ -11,7 +12,7 @@ class GuessController extends Controller
         return view('guess');
     }
 
-    public function submit(Request $request){
+    public function submit(GuessRequest $request){
         $feedback = new Feedback();
         
         $feedback->name = $request->input('name');
@@ -19,8 +20,10 @@ class GuessController extends Controller
         $feedback->patronymic = $request->input('patronymic');
         $feedback->email = $request->input('email');
         $feedback->msg = $request->input('msg');
+
+        $feedback->save();
         // $request->validated();
         
-        // return redirect()->route('guess')->with('success', 'Ваш тест отправлен.');
+        return redirect()->route('guess')->with('success', 'Ваш отзыв отправлен.');
     }
 }
