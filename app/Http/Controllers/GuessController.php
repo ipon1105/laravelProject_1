@@ -13,6 +13,8 @@ class GuessController extends Controller
     }
 
     public function submit(GuessRequest $request){
+        $request->validated();
+
         $feedback = new Feedback();
         
         $feedback->name = $request->input('name');
@@ -22,7 +24,6 @@ class GuessController extends Controller
         $feedback->msg = $request->input('msg');
 
         $feedback->save();
-        // $request->validated();
         
         return redirect()->route('guess')->with('success', 'Ваш отзыв отправлен.');
     }
