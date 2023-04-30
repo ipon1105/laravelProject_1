@@ -9,6 +9,7 @@ use App\Http\Controllers\HobbyController;
 use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\StudyController;
 use App\Http\Controllers\TestController;
+use App\Http\Controllers\GuessController;
 
 Route::get('/',         [AboutController::class,    'show']);
 Route::get('/about',    [AboutController::class,    'show'])->name('about');
@@ -19,6 +20,8 @@ Route::get('/hobby',    [HobbyController::class,    'show'])->name('hobby');
 Route::get('/album',    [AlbumController::class,    'show'])->name('album');
 Route::get('/study',    [StudyController::class,    'show'])->name('study');
 Route::get('/test',     [TestController::class,     'show'])->name('test');
+Route::get('/guess',    [GuessController::class,    'show'])->name('guess');
 
 Route::post('/contact/submit',  [ContactController::class,  'submit'])->name('contact-form');
 Route::post('/test/submit',     [TestController::class,     'submit'])->name('test-form');
+Route::post('/guess/submit',    [GuessController::class,    'submit'])->name('guess-form');
