@@ -67,11 +67,11 @@
                     Матрица разбитая на клетки, называется клеточной и … <br>
                     <div class="box">
                         <select name="select">
-                            <option value="select_1">Окаймленной</option>
-                            <option value="select_2">Блочной</option>
-                            <option value="select_3">Равной</option>
-                            <option value="select_4">Квазидиагональной</option>
-                            <option value="select_5">Средней</option>
+                            <option value="Окаймленной">Окаймленной</option>
+                            <option value="Блочной">Блочной</option>
+                            <option value="Равной">Равной</option>
+                            <option value="Квазидиагональной">Квазидиагональной</option>
+                            <option value="Средней">Средней</option>
                         </select>
                     </div>
                 </article>
