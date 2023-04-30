@@ -22,8 +22,9 @@ class TestRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'fio' => 'required|regex:/[а-яА-Я]{1,}\s[а-яА-ЯёЁ]{1,}\s[а-яА-Я]{1,}/',
+            'fio' => 'required|regex:/[а-яА-Я]{1,}\s[а-яА-ЯёЁ]{1,}\s[а-яА-Я]{1,}/|max:255',
             'group' => 'required',
+            'input_1' => 'max:255',
         ];
     }
 
