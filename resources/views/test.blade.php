@@ -55,10 +55,10 @@
                     <h4>Вопрос №1:</h4>
                     Существующие и имеющие важное значение матричные степенные ряды это: <br>
                     <div id="my_box" class="box">
-                        <label><input type="checkbox" name="check[]" value="check_1">Левые </label><br>
-                        <label><input type="checkbox" name="check[]" value="check_2">Правые</label><br>
-                        <label><input type="checkbox" name="check[]" value="check_3">Верние</label><br>
-                        <label><input type="checkbox" name="check[]" value="check_4">Нижние</label><br>
+                        <label><input type="checkbox" name="check[]" value="Левые">Левые </label><br>
+                        <label><input type="checkbox" name="check[]" value="Правые">Правые</label><br>
+                        <label><input type="checkbox" name="check[]" value="Верние">Верние</label><br>
+                        <label><input type="checkbox" name="check[]" value="Нижние">Нижние</label><br>
                     </div>
                 </article>
                 <!-- Вопрос два, ответ Блочной -->
