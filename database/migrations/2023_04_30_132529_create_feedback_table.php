@@ -17,7 +17,7 @@ return new class extends Migration
             // ФИО
             $table->string('surname');
             $table->string('name');
-            $table->string('patornymic');
+            $table->string('patronymic');
 
             // Почта
             $table->string('email');
