@@ -35,13 +35,13 @@
                         placeholder="Коновалов Иван Викторович" value="{{ old('fio') }}"></div>
                 <div class="box">Ваша группа:
                     <select name="group">
-                        <option value="001">ПИ/Б-20-1-о</option>
-                        <option value="002">ИВТ/Б-20-1-о</option>
-                        <option value="003">ИВТ/Б-20-2-о</option>
-                        <option value="004">ПИН/Б-20-2-о</option>
-                        <option value="005">ИС/Б-20-2-о</option>
-                        <option value="006">УТС/Б-20-1-о</option>
-                        <option value="007">УТС/Б-20-2-о</option>
+                        <option value="ПИ/Б-20-1-о" >ПИ/Б-20-1-о</option>
+                        <option value="ИВТ/Б-20-1-о">ИВТ/Б-20-1-о</option>
+                        <option value="ИВТ/Б-20-2-о">ИВТ/Б-20-2-о</option>
+                        <option value="ПИН/Б-20-2-о">ПИН/Б-20-2-о</option>
+                        <option value="ИС/Б-20-2-о" >ИС/Б-20-2-о</option>
+                        <option value="УТС/Б-20-1-о">УТС/Б-20-1-о</option>
+                        <option value="УТС/Б-20-2-о">УТС/Б-20-2-о</option>
                     </select>
                 </div>
             </fieldset>
