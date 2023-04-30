@@ -30,4 +30,5 @@ Route::get('/blog/edit',[BlogEditController::class, 'show'])->name('blog-edit');
 Route::post('/contact/submit',  [ContactController::class,  'submit'])->name('contact-form');
 Route::post('/test/submit',     [TestController::class,     'submit'])->name('test-form');
 Route::post('/guess/submit',    [GuessController::class,    'submit'])->name('guess-form');
+Route::post('/blog/submit',     [BlogEditController::class, 'submit'])->name('blog-form');
 

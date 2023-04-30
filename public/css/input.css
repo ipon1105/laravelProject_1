@@ -1,0 +1,31 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto+Condensed);
+
+body {
+    font-family: 'Roboto Condensed', sans-serif;
+    color: #ffffff;
+}
+
+.container {
+    font-size: 40px;
+    background-color: rgb(72, 71, 71);
+    border-radius: 15px;
+    display: block;
+}
+
+.inputHeader {
+    font-size: 40px;
+    background-color: white;
+    opacity: 0.4;
+    color: black;
+    width:100%;
+    border-radius: 15px;
+}   
+
+.inputMsg {
+    font-size: 22px;
+    background-color: white;
+    opacity: 0.4;
+    color: black;
+    width:100%;
+    border-radius: 15px;
+}   

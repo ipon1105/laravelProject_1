@@ -109,6 +109,8 @@ body {
     .w3-black,.w3-hover-black:hover{color:#BAB9B9!important;background-color:#000!important}
     /* margin for button */
     .leftmar {margin-left: 30px;}
+    .rightmar {margin-right: 30px;}
+    .topmar {margin-top: 30px;}
     /* font colour*/
     .gray {color: #8D8D8D;}
     .green {color: #B5E853;}
