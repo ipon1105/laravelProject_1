@@ -71,30 +71,32 @@
             </div>
 
         </fieldset>
-
-        <table>
-            <thead>
-                <tr>
-                    <td>Дата отзыва</td>
-                    <td>ФИО</td>
-                    <td>Email</td>
-                    <td>Текст отзыва</td>
-                </tr>
-            </thead>
-            <tbody>
-                {{-- Generate data here --}}
-                @if (session('feedbacks'))
-                    @foreach (session('feedbacks') as $row)
-                        <tr>
-                            <td> {{ $row->created_at }} </td>
-                            <td> {{$row->surname}} {{$row->name}} {{$row->patronymic}} </td>
-                            <td> {{$row->email}} </td>
-                            <td> {{$row->msg}} </td>
-                        </tr>
-                    @endforeach
-                @endif
-            </tbody>
-        </table>
     </form>
+    
+    <table>
+                <thead>
+                    <tr>
+                        <td>Дата отзыва</td>
+                        <td>ФИО</td>
+                        <td>Email</td>
+                        <td>Текст отзыва</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{-- Generate data here --}}
+                    @if (session('feedbacks'))
+                        @foreach (session('feedbacks') as $row)
+                            <tr>
+                                <td> {{ $row->created_at }} </td>
+                                <td> {{$row->surname}} {{$row->name}} {{$row->patronymic}} </td>
+                                <td> {{$row->email}} </td>
+                                <td> {{$row->msg}} </td>
+                            </tr>
+                        @endforeach
+                    @endif
+                </tbody>
+    </table>
+
+    <a id="update" href="{{ route('guess-all') }}">Обновить</a>
 </main>
 @endsection

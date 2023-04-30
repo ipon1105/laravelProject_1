@@ -52,6 +52,11 @@
                         <img id="img_7" src="source/img/figure_06.png">
                         <a href="{{ route('test') }}">Тест по дисциплине</a>
                     </li>
+                    <li onmouseover="document.getElementById('img_8').src='source/img/figure_08.png';"
+                        onmouseout="document.getElementById('img_8').src='source/img/figure_07.png';">
+                        <img id="img_8" src="source/img/figure_07.png" >
+                        <a href="{{ route('guess-all') }}">Гостевая книга</a>
+                    </li>
                 </ul>
             </nav>
         </div>
