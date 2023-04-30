@@ -29,7 +29,7 @@
     @endif
 
     <main>
-    <form id="form" action="{{ route('contact-form') }}" method="POST">
+    <form id="form" action="{{ route('guess-form') }}" method="POST">
         @csrf
         <fieldset>
             <legend>Отправить отзыв</legend>
