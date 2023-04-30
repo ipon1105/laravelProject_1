@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\TestRequest;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\TestMail;
+use App\Models\Test;
 
 class TestController extends Controller {
     public function show() {
@@ -14,18 +13,32 @@ class TestController extends Controller {
     public function submit(TestRequest $request){
         $request->validated();
         
-        $i = 0;
+        $test = new Test();
+        $test->fio = $request->input('fio');
+        $test->group = $request->input('group');
+        $test->is1Correctly = false;
+        $test->is2Correctly = false;
+        $test->is3Correctly = false;
         
-        if ($request->input('check') != null &&
-            count($request->input('check')) == 2 &&
-            strcmp($request->input('check')[0], 'check_1') == 0 &&
-            strcmp($request->input('check')[1], 'check_2') == 0) $i = $i + 1;
-        if (strcmp($request->input('select'), 'select_2') == 0) $i = $i + 1;
-        if (strcmp($request->input('input_1'), 'Треугольной') == 0) $i = $i + 1;
+        $i = 0;
+        if ($request->input('check') != null){
+            if (count($request->input('check')) == 2 &&
+                strcmp($request->input('check')[0], 'Левые') == 0 &&
+                strcmp($request->input('check')[1], 'Правые') == 0) {$i = $i + 1; $test->is1Correctly = true;}
+
+            $test->question1 = implode('|', $request->input('check'));
+        } else {
+            $test->question1 = "";
+        }
+
+        $test->question2 = $request->input('select');
+        if (strcmp($request->input('select'), 'Блочной') == 0) {$i = $i + 1; $test->is2Correctly = true;}
+
+        $test->question3 = $request->input('input_1');
+        if (strcmp($request->input('input_1'), 'Треугольной') == 0) {$i = $i + 1; $test->is3Correctly = true;}
+
+        $test->save();
 
         return redirect()->route('test')->with('success', 'Ваш тест отправлен. Результат: '.$i.'/3');
     }
 }
-/*
-Рализовать всю проверку с помощью встроенных правил валидации Laravel
-*/
