@@ -75,15 +75,24 @@
         <table>
             <thead>
                 <tr>
-                    <td colspan="1">Дата отзыва</td>
-                    <td colspan="2">ФИО</td>
-                    <td colspan="1">Email</td>
-                    <td colspan="4">Текст отзыва</td>
+                    <td>Дата отзыва</td>
+                    <td>ФИО</td>
+                    <td>Email</td>
+                    <td>Текст отзыва</td>
                 </tr>
             </thead>
             <tbody>
                 {{-- Generate data here --}}
-
+                @if (session('feedbacks'))
+                    @foreach (session('feedbacks') as $row)
+                        <tr>
+                            <td> {{ $row->created_at }} </td>
+                            <td> {{$row->surname}} {{$row->name}} {{$row->patronymic}} </td>
+                            <td> {{$row->email}} </td>
+                            <td> {{$row->msg}} </td>
+                        </tr>
+                    @endforeach
+                @endif
             </tbody>
         </table>
     </form>

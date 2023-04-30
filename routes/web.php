@@ -25,3 +25,5 @@ Route::get('/guess',    [GuessController::class,    'show'])->name('guess');
 Route::post('/contact/submit',  [ContactController::class,  'submit'])->name('contact-form');
 Route::post('/test/submit',     [TestController::class,     'submit'])->name('test-form');
 Route::post('/guess/submit',    [GuessController::class,    'submit'])->name('guess-form');
+
+Route::get('/guess/all',        [GuessController::class,    'all'])->name('guess-all');

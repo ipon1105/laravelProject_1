@@ -27,4 +27,8 @@ class GuessController extends Controller
         
         return redirect()->route('guess')->with('success', 'Ваш отзыв отправлен.');
     }
+
+    public function all(){
+        return redirect()->route('guess')->with('feedbacks', Feedback::all());
+    }
 }
