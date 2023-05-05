@@ -30,7 +30,7 @@ class GuessController extends Controller
 
     public function all(){
         $data = new Feedback;
-        
+
         return redirect()->route('guess')->with('feedbacks',  $data->orderBy('created_at', 'desc')->get());
     }
 }

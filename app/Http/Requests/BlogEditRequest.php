@@ -11,7 +11,7 @@ class BlogEditRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,8 @@ class BlogEditRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'header' => 'required|max:255',
+            'content' => 'required',
         ];
     }
 }

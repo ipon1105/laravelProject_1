@@ -6,20 +6,46 @@
 @section('title')Добавить запись@endsection
 
 @section('body')
-<form id="form" action="{{ route('blog-form') }}" method="POST">
-    {{-- Тема сообщения --}}
-    <div class="leftmar rightmar container">
-        <div class="leftmar rightmar label">Тема записи ></div>
-        <input class="inputHeader" type="text">
+    <!-- Успех -->
+    @if (session('success'))
+    <div class="alert alert-success" role="alert">
+        <ul><li>{{ session('success') }}</li></ul>
     </div>
+    @endif
 
-    {{-- Поле ввода текста --}}
-    <div class="leftmar rightmar topmar container">
-        <div class="leftmar rightmar label">Текст записи ></div>
-        <textarea class="inputMsg" name="text" rows="7"></textarea>
+    <!-- Ошибки -->
+    @if($errors->any())
+    <div class="alert alert-error">
+    <ul>
+        @foreach($errors->all() as $e)
+        <li>{{ $e }}</li>
+        @endforeach
+    </ul>
     </div>
+    @endif
 
-    <button class="button leftmar topmar">Прикрепить изображение</button>
-    <button class="button leftmar topmar" id="send" type="submit">Отправить</button>
-</form>
+    <form id="form" enctype="multipart/form-data" action="{{ route('blog-form') }}" method="POST">
+        @csrf
+
+        {{-- Прикрепить изображение --}}
+        <div class="leftmar rightmar container">
+            <div class="leftmar rightmar label">Прикрепить изображение ></div>
+            <input class="inputHeader" type="file" name="inputFile">
+        </div>
+
+        {{-- Тема сообщения --}}
+        <div class="leftmar rightmar topmar container">
+            <div class="leftmar rightmar label">Тема записи ></div>
+            <input class="inputHeader" type="text" name="header">
+        </div>
+
+        {{-- Поле ввода текста --}}
+        <div class="leftmar rightmar topmar container">
+            <div class="leftmar rightmar label">Текст записи ></div>
+            <textarea class="inputMsg" rows="7" name="content"></textarea>
+        </div>
+
+        <button class="button leftmar topmar" id="send" type="submit">Отправить</button>
+    </form>
+
 @endsection
