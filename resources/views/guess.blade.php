@@ -29,7 +29,7 @@
     @endif
 
     <main>
-    <form id="form" action="{{ route('guess-form') }}" method="POST">
+    <form id="form" action="{{ route('guess-form-add') }}" method="POST">
         @csrf
         <fieldset>
             <legend>Отправить отзыв</legend>
@@ -74,30 +74,30 @@
     </form>
     
     <table>
-                <thead>
+        <thead>
+            <tr>
+                <td>Дата отзыва</td>
+                <td>ФИО</td>
+                <td>Email</td>
+                <td>Текст отзыва</td>
+            </tr>
+        </thead>
+        <tbody>
+            {{-- Generate data here --}}
+            @if ($feedbacks)
+                @foreach ($feedbacks as $row)
                     <tr>
-                        <td>Дата отзыва</td>
-                        <td>ФИО</td>
-                        <td>Email</td>
-                        <td>Текст отзыва</td>
+                        <td> {{ explode(';', $row)[0] }} </td>
+                        <td> {{ explode(';', $row)[2] }} {{ explode(';', $row)[1] }} {{ explode(';', $row)[3] }} </td>
+                        <td> {{ explode(';', $row)[4] }} </td>
+                        <td> {{ explode(';', $row)[5] }} </td>
                     </tr>
-                </thead>
-                <tbody>
-                    {{-- Generate data here --}}
-                    @if (session('feedbacks'))
-                        @foreach (session('feedbacks') as $row)
-                            <tr>
-                                <td> {{ explode(';', $row)[0] }} </td>
-                                <td> {{ explode(';', $row)[2] }} {{ explode(';', $row)[1] }} {{ explode(';', $row)[3] }} </td>
-                                <td> {{ explode(';', $row)[4] }} </td>
-                                <td> {{ explode(';', $row)[5] }} </td>
-                            </tr>
-                        @endforeach
-                    @endif
-                </tbody>
+                @endforeach
+            @endif
+        </tbody>
     </table>
     
-    <form id="form" enctype="multipart/form-data" action="{{ route('guess-form') }}" method="POST">
+    <form id="form" enctype="multipart/form-data" action="{{ route('guess-form-load') }}" method="POST">
         @csrf
         {{-- Прикрепить файл --}}
         <div class="leftmar rightmar container">
@@ -105,6 +105,6 @@
             <input class="inputHeader" type="file" name="inputFile">
         </div>
         <button class="button leftmar topmar" id="send" type="submit">Отправить</button>
-     </form>
+    </form>
 </main>
 @endsection
