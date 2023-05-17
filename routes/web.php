@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\HomeController;
@@ -35,3 +36,6 @@ Route::post('/guess/submit/load',   [GuessController::class,    'load']  )->name
 Route::post('/blog/edit/submit',    [BlogEditController::class, 'submit'])->name('blog-edit-form');
 Route::post('/blog/submit',         [BlogController::class,     'submit'])->name('blog-form');
 
+Route::get('/admin',        [AdminController::class,    'show'])->name('admin');
+Route::post('/admin/add',   [AdminController::class,    'add'] )->name('admin-add-form');
+Route::post('/admin/load',  [AdminController::class,    'load'])->name('admin-load-form');
