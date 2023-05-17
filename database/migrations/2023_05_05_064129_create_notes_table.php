@@ -23,6 +23,9 @@ return new class extends Migration
             // Содержание статьи
             $table->text('content');
 
+            // Содержание статьи
+            $table->text('author')->nullable();
+
             $table->timestamps();
         });
     }

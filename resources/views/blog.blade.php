@@ -1,12 +1,48 @@
 @extends('layout.blogbase')
 
 @section('links')
+   <link rel="stylesheet" type="text/css" href="{{ url('css/aricle.css') }}" >
 @endsection
 
 @section('title')Библиотека записей@endsection
 
 @section('body')
-<p>
+<div class="center">  
+   <form id="form" enctype="multipart/form-data" action="{{ route('blog-form') }}" method="POST">
+      @csrf
+      {{-- Прикрепить файл --}}
+      <div class="leftmar rightmar container">
+          <div class="leftmar rightmar label">Прикрепить файл ></div>
+          <input class="inputHeader" type="file" name="inputFile">
+      </div>
+      <button class="button leftmar topmar" id="send" type="submit">Отправить</button>
+   </form>
+  
+   @if ($pages)
+      <div class="leftmar topmar">
+      @foreach ($pages as $num => $page)
+         <a href="{{route('blog-index', $num)}}"> {{ $page }}</a>
+      @endforeach
+      </div>
+   @endif
+</div>
+
+@if($notes)
+   @foreach ($notes as $note)
+   <div class="container leftmar rightmar topmar">
+      <div class="square">
+         @isset($note->filename)
+            <img src="{{ asset('/storage/'. $note->filename) }}" alt="articleImage" class="mask">
+         @endisset
+         <div class="h1 leftmar">{{$note->header}}</div>
+         <p>{{$note->content}}</p>
+         <p>{{$note->created_at}}</p>
+      </div>
+   </div>
+   @endforeach
+@endif
+{{-- 
+   <p>
    Text can be <h class="bold">Bold</h>, <h class="ital">italic</h>, <h class="oblique">oblique</h>, <h class="underline">underline</h>, <h class="overline">overline</h>, <h class="strickthrough">strikethrough</h>or <h class='keyword'>keyword</h>.
 </p>
 <!-- paragraph -->
@@ -214,5 +250,5 @@
    <h id="usrip">  </h>
    
 </footer>
-</div>
+</div> --}}
 @endsection

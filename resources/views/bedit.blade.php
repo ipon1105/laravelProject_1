@@ -24,7 +24,7 @@
     </div>
     @endif
 
-    <form id="form" enctype="multipart/form-data" action="{{ route('blog-form') }}" method="POST">
+    <form id="form" enctype="multipart/form-data" action="{{ route('blog-edit-form') }}" method="POST">
         @csrf
 
         {{-- Прикрепить изображение --}}

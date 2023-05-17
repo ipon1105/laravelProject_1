@@ -18,11 +18,11 @@ class BlogEditController extends Controller
         $header = $request->input('header');
         $content = $request->input('content');
         $path = null;
-        
+            
         // Путь до файла если он есть
         if ($request->file('inputFile') != null)
             $path = $request->file('inputFile')->store('uploads', 'public');
-        
+            
         $note = new Note();
         $note->header = $header;
         $note->content = $content;

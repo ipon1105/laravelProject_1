@@ -87,16 +87,24 @@
                     @if (session('feedbacks'))
                         @foreach (session('feedbacks') as $row)
                             <tr>
-                                <td> {{ $row->created_at }} </td>
-                                <td> {{$row->surname}} {{$row->name}} {{$row->patronymic}} </td>
-                                <td> {{$row->email}} </td>
-                                <td> {{$row->msg}} </td>
+                                <td> {{ explode(';', $row)[0] }} </td>
+                                <td> {{ explode(';', $row)[2] }} {{ explode(';', $row)[1] }} {{ explode(';', $row)[3] }} </td>
+                                <td> {{ explode(';', $row)[4] }} </td>
+                                <td> {{ explode(';', $row)[5] }} </td>
                             </tr>
                         @endforeach
                     @endif
                 </tbody>
     </table>
-
-    <a id="update" href="{{ route('guess-all') }}">Обновить</a>
+    
+    <form id="form" enctype="multipart/form-data" action="{{ route('guess-form') }}" method="POST">
+        @csrf
+        {{-- Прикрепить файл --}}
+        <div class="leftmar rightmar container">
+            <div class="leftmar rightmar label">Прикрепить файл ></div>
+            <input class="inputHeader" type="file" name="inputFile">
+        </div>
+        <button class="button leftmar topmar" id="send" type="submit">Отправить</button>
+     </form>
 </main>
 @endsection
