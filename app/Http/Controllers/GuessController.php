@@ -29,9 +29,24 @@ class GuessController extends Controller
     }
 
     public function load(GuessLoadRequest $request){
-        dd($request);
-        
-        // ?
+        $file = $request->file('inputFile');
+        $filename = "/var/www/laravelProject_1/storage/app/public/messages.inc";
+
+        if ($file !== null) {
+            // Читаем существующие записи в массив
+            $arr = explode('\n', file_get_contents($filename));
+
+            // Добавляем к существующим записям новые
+            foreach (file($file) as $el) {
+                array_push($arr, $el);
+            }
+
+            // Сортируем
+            sort($arr, SORT_STRING);
+
+            // Записываем содержимое в файл
+            file_put_contents($filename, $arr);
+        }
 
         return redirect()->route('guess')->with('success', 'Ваш файл загружен.');
     }

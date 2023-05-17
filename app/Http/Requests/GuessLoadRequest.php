@@ -22,7 +22,7 @@ class GuessLoadRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'inputFile' => 'required',
         ];
     }
 }
