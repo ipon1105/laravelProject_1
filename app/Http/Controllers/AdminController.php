@@ -7,10 +7,14 @@ use App\Http\Requests\AdminLoadRequest;
 use App\Models\Note;
 use App\Models\Statistic;
 use Illuminate\Http\Request;
+use Auth;
 
 class AdminController extends Controller
 {
     public function show(Request $request) {
+        if (!Auth::user()->is_admin)
+            return redirect()->route('login');
+
         $item = new Statistic;
         $item->save_statistic('admin');
 
