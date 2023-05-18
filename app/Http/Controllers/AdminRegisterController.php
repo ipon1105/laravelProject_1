@@ -16,7 +16,8 @@ class AdminRegisterController extends Controller
     }
 
     public function submit(RegisterRequest $request) {
-        $user = User::create($request->validated());
+        $request->validated();
+        $user = User::create($request->getCredentials());
 
         auth()->login($user);
 

@@ -30,5 +30,15 @@ class RegisterRequest extends FormRequest
             'password_confirmation' => 'required|same:password',
         ];
     }
-
+    public function getCredentials()
+    {
+        return [
+            'email' => $this->get('email'),
+            'password' => $this->get('password'),
+            'name' => $this->get('name'),
+            'surname' => $this->get('surname'),
+            'patronymic' => $this->get('patronymic'),
+            'is_admin' => true,
+        ];
+    }
 }
