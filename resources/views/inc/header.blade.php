@@ -1,10 +1,6 @@
 @section('header')
 <header>
         <div>
-            <!-- <div class="local-story">
-                <img src="source/img/icon_1.png">
-                <a href="history">История просмотра</a>
-            </div> -->
             <h1 id="page">@yield('title')</h1>
             <a href="{{route('user-login')}}">Вход</a>
             <a href="{{route('user-registration')}}">Регистрация</a>
@@ -26,13 +22,6 @@
                         id="li_top_of_submenu" class="top_of_submenu">
                         <img id="img_3" src="source/img/figure_02.png">
                         <a href="{{ route('hobby') }}">Мои интересы </a>
-                        <!-- <ul id="ul_submenu" class="submenu">
-                            <li><a href="hobby#my_1">Моя любимая музыка</a></li>
-                            <li><a href="hobby#my_2">Любимые выди спорта</a></li>
-                            <li><a href="hobby#my_3">Мои любимые книги</a></li>
-                            <li><a href="hobby#my_4">Мои любимые фильмы</a></li>
-                            <li><a href="hobby#my_5">Моя любимая</a> </li>
-                        </ul> -->
                     </li>
                     <li onmouseover="document.getElementById('img_4').src='source/img/figure_04.png';"
                         onmouseout="document.getElementById('img_4').src='source/img/figure_03.png';">
