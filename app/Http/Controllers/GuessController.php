@@ -5,10 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Feedback;
 use App\Http\Requests\GuessAddRequest;
 use App\Http\Requests\GuessLoadRequest;
+use App\Models\Statistic;
+use Illuminate\Http\Request;
 
 class GuessController extends Controller
 {
-    public function show() {
+    public function show(Request $request) {
+        $item = new Statistic;
+        $item->save_statistic('guess');
+
         $filename = "/var/www/laravelProject_1/storage/app/public/messages.inc";
         $data = file($filename);
 

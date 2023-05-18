@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Http\Requests\TestRequest;
 use App\Models\Test;
+use App\Models\Statistic;
 
 class TestController extends Controller {
-    public function show() {
+    public function show(Request $request) {
+        $item = new Statistic;
+        $item->save_statistic('test');
+
         return view('test');
     }
 

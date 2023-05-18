@@ -5,10 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Note;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Models\Statistic;
+
 class BlogController extends Controller
 {
     
-    public function show(){
+    public function show(Request $request){
+        $item = new Statistic;
+        $item->save_statistic('blog');
+
         $index = 1;
         
         $perPage = 10;

@@ -13,6 +13,7 @@ use App\Http\Controllers\TestController;
 use App\Http\Controllers\GuessController;
 use App\Http\Controllers\BlogEditController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\AdminStatisticController;
 
 Route::get('/',         [AboutController::class,    'show']);
 Route::get('/about',    [AboutController::class,    'show'])->name('about');
@@ -24,7 +25,6 @@ Route::get('/album',    [AlbumController::class,    'show'])->name('album');
 Route::get('/study',    [StudyController::class,    'show'])->name('study');
 Route::get('/test',     [TestController::class,     'show'])->name('test');
 Route::get('/guess',    [GuessController::class,    'show'])->name('guess');
-Route::get('/guess/all',[GuessController::class,    'all'] )->name('guess-all');
 Route::get('/blog',     [BlogController::class,     'show'])->name('blog');
 Route::get('/blog/view/{page}', [BlogController::class,     'index'] )->name('blog-index');
 Route::get('/blog/edit',[BlogEditController::class, 'show'])->name('blog-edit');
@@ -39,3 +39,5 @@ Route::post('/blog/submit',         [BlogController::class,     'submit'])->name
 Route::get('/admin',        [AdminController::class,    'show'])->name('admin');
 Route::post('/admin/add',   [AdminController::class,    'add'] )->name('admin-add-form');
 Route::post('/admin/load',  [AdminController::class,    'load'])->name('admin-load-form');
+
+Route::get('/admin/statistics',  [AdminStatisticController::class,    'show'])->name('admin-statistic');

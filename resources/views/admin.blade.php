@@ -6,6 +6,11 @@
 @section('title') Страница администратора @endsection
 
 @section('body')
+    <div>
+        <a class="leftmar" href="{{route('admin')}}">Редактор</a>
+        <a class="leftmar" href="{{route('admin-statistic')}}">Посещения</a>
+    </div>
+
     <!-- Успех -->
     @if (session('success'))
     <div class="alert alert-success" role="alert">

@@ -4,10 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\BlogEditRequest;
 use App\Models\Note;
+use App\Models\Statistic;
+use Illuminate\Http\Request;
 
 class BlogEditController extends Controller
 {
-    public function show() {
+    public function show(Request $request) {
+        $item = new Statistic;
+        $item->save_statistic('blogedit');
+
         return view('bedit');
     }
 
