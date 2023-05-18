@@ -17,6 +17,8 @@ use App\Http\Controllers\AdminStatisticController;
 use App\Http\Controllers\AdminLoginController;
 use App\Http\Controllers\AdminRegisterController;
 use App\Http\Controllers\AdminLogoutController;
+use App\Http\Controllers\UserLoginController;
+use App\Http\Controllers\UserRegistrationController;
 
 Route::get('/',         [AboutController::class,    'show']);
 Route::get('/about',    [AboutController::class,    'show'])->name('about');
@@ -48,10 +50,14 @@ Route::get('/admin/statistics',  [AdminStatisticController::class,    'show'])->
 // Авторизация
 Route::get('/admin/login',           [AdminLoginController::class,    'show'])  ->name('login');
 Route::post('/admin/login/submit',   [AdminLoginController::class,    'submit'])->name('login-submit');
+Route::get('/user/login',            [UserLoginController::class,    'show'])  ->name('user-login');
+Route::post('/user/login/submit',    [UserLoginController::class,    'submit'])->name('user-login-submit');
 
 // Регистрация
-Route::get('/admin/register',           [AdminRegisterController::class, 'show'])  ->name('registration');
-Route::post('/admin/register/submit',   [AdminRegisterController::class, 'submit'])->name('registration-submit');
+Route::get('/admin/registration',           [AdminRegisterController::class, 'show'])  ->name('registration');
+Route::post('/admin/registration/submit',   [AdminRegisterController::class, 'submit'])->name('registration-submit');
+Route::get('/user/registration',            [UserRegistrationController::class, 'show'])  ->name('user-registration');
+Route::post('/user/registration/submit',    [UserRegistrationController::class, 'submit'])->name('user-registration-submit');
 
 // Выход
 Route::get('/logout', [AdminLogoutController::class,    'logout'])->middleware('auth')->name('logout');

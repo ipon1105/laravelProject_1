@@ -6,6 +6,8 @@
                 <a href="history">История просмотра</a>
             </div> -->
             <h1 id="page">@yield('title')</h1>
+            <a href="{{route('user-login')}}">Вход</a>
+            <a href="{{route('user-registration')}}">Регистрация</a>
             <!-- Навигация с гиперссылками -->
             <nav>
                 <ul>
