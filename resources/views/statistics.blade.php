@@ -1,4 +1,4 @@
-@extends('layout.blogbase')
+@extends('layout.adminbase')
 
 @section('links')
 @endsection
@@ -6,10 +6,6 @@
 @section('title') Страница администратора @endsection
 
 @section('body')
-    <div>
-        <a class="leftmar" href="{{route('admin')}}">Редактор</a>
-        <a class="leftmar" href="{{route('admin-statistic')}}">Посещения</a>
-    </div>
 
     <!-- Успех -->
     @if (session('success'))

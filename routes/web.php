@@ -14,6 +14,9 @@ use App\Http\Controllers\GuessController;
 use App\Http\Controllers\BlogEditController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\AdminStatisticController;
+use App\Http\Controllers\AdminLoginController;
+use App\Http\Controllers\AdminRegisterController;
+use App\Http\Controllers\AdminLogoutController;
 
 Route::get('/',         [AboutController::class,    'show']);
 Route::get('/about',    [AboutController::class,    'show'])->name('about');
@@ -36,8 +39,19 @@ Route::post('/guess/submit/load',   [GuessController::class,    'load']  )->name
 Route::post('/blog/edit/submit',    [BlogEditController::class, 'submit'])->name('blog-edit-form');
 Route::post('/blog/submit',         [BlogController::class,     'submit'])->name('blog-form');
 
-Route::get('/admin',        [AdminController::class,    'show'])->name('admin');
-Route::post('/admin/add',   [AdminController::class,    'add'] )->name('admin-add-form');
-Route::post('/admin/load',  [AdminController::class,    'load'])->name('admin-load-form');
+Route::get ('/admin',       [AdminController::class,    'show'])->middleware('auth')->name('admin');
+Route::post('/admin/add',   [AdminController::class,    'add'] )->middleware('auth')->name('admin-add-form');
+Route::post('/admin/load',  [AdminController::class,    'load'])->middleware('auth')->name('admin-load-form');
 
-Route::get('/admin/statistics',  [AdminStatisticController::class,    'show'])->name('admin-statistic');
+Route::get('/admin/statistics',  [AdminStatisticController::class,    'show'])->middleware('auth')->name('admin-statistic');
+
+// Авторизация
+Route::get('/admin/login',           [AdminLoginController::class,    'show'])  ->name('login');
+Route::post('/admin/login/submit',   [AdminLoginController::class,    'submit'])->name('login-submit');
+
+// Регистрация
+Route::get('/admin/register',           [AdminRegisterController::class, 'show'])  ->name('registration');
+Route::post('/admin/register/submit',   [AdminRegisterController::class, 'submit'])->name('registration-submit');
+
+// Выход
+Route::get('/logout', [AdminLogoutController::class,    'logout'])->middleware('auth')->name('logout');
