@@ -32,14 +32,14 @@ Route::get('/test',     [TestController::class,     'show'])->name('test');
 Route::get('/guess',    [GuessController::class,    'show'])->name('guess');
 Route::get('/blog',     [BlogController::class,     'show'])->name('blog');
 Route::get('/blog/view/{page}', [BlogController::class,     'index'] )->name('blog-index');
-Route::get('/blog/edit',[BlogEditController::class, 'show'])->name('blog-edit');
+Route::get('/blog/edit',[BlogEditController::class, 'show'])->middleware('auth')->name('blog-edit');
 
 Route::post('/contact/submit',      [ContactController::class,  'submit'])->name('contact-form');
 Route::post('/test/submit',         [TestController::class,     'submit'])->name('test-form');
 Route::post('/guess/submit/add',    [GuessController::class,    'add']   )->name('guess-form-add');
 Route::post('/guess/submit/load',   [GuessController::class,    'load']  )->name('guess-form-load');
-Route::post('/blog/edit/submit',    [BlogEditController::class, 'submit'])->name('blog-edit-form');
-Route::post('/blog/submit',         [BlogController::class,     'submit'])->name('blog-form');
+Route::post('/blog/load',           [BlogEditController::class, 'load'])->name('blog-form');
+Route::post('/blog/edit/submit',    [BlogEditController::class, 'submit'])->middleware('auth')->name('blog-edit-form');
 
 Route::get ('/admin',       [AdminController::class,    'show'])->middleware('auth')->name('admin');
 Route::post('/admin/add',   [AdminController::class,    'add'] )->middleware('auth')->name('admin-add-form');

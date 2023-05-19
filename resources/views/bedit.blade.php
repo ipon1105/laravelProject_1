@@ -23,6 +23,16 @@
     </ul>
     </div>
     @endif
+    
+    <form id="form" enctype="multipart/form-data" action="{{ route('blog-form') }}" method="POST">
+        @csrf
+        {{-- Прикрепить файл --}}
+        <div class="leftmar rightmar container">
+            <div class="leftmar rightmar label">Прикрепить файл ></div>
+            <input class="inputHeader" type="file" name="inputFile">
+        </div>
+        <button class="button leftmar topmar" id="send" type="submit">Отправить</button>
+    </form>
 
     <form id="form" enctype="multipart/form-data" action="{{ route('blog-edit-form') }}" method="POST">
         @csrf
