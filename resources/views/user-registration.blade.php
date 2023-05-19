@@ -24,7 +24,7 @@
     @endif
 <main>
 
-    <form class="leftmar" method="POST" action="{{route('user-registration-submit')}}">
+    <form class="leftmar" method="POST" action="{{route('user-registration-submit')}}" onsubmit="onsubmitForm(this)">
         @csrf
         
         <div>
@@ -41,7 +41,7 @@
         </div>
         <div>
             Почта
-            <input type="email" name="email" value="{{ old('email') }}">
+            <input type="email" name="email" value="{{ old('email') }}" onblur="onBlur(this.value)">
         </div>
         <div>
             Пароль
@@ -55,5 +55,62 @@
             <button type="submit">Регистрация</button>
         </div>
     </form>
+
+    <script type="text/javascript">
+        function onBlur(login){
+            var ajax = new XMLHttpRequest();
+
+            ajax.open("GET", "/getLogin/"+login, true);
+            ajax.onreadystatechange = function(){
+                if (this.readyState == 4 && this.status == 200){
+                    var data = JSON.parse(this.responseText);
+                    if (!data.empty){
+                        alert(data.status + " - " + data.message);
+                    }
+                }
+
+                if (this.status == 500){
+                    alert(this.responseText);
+                }
+            }
+            ajax.send();
+
+            // $.ajax({
+            //     type: "GET",
+            //     url: "/getLogin",
+            //     dataType: "json",
+            //     data: {'login': login},
+            //     success: function(data){
+            //         alert('seccess' + data);
+            //         var data1 = JSON.parse(data);
+            //         if (!data1.empty)
+            //             alert(data1.status + " - " + data1.message);
+            //     }
+            // });
+            return false;
+        }
+
+        function onSubmitForm(form){
+            var ajax = new XMLHttpRequest();
+            var formData = new FromData(form);
+
+            ajax.open("POST", form.getAttribute("action"), true);
+            ajax.onreadystatechange = function(){
+                if (this.readyState == 4 && this.status == 200){
+                    var data = JSON.parse(this.responseText);
+
+                    alert(data.status + " - " + data.message);
+                }
+
+                if (this.status == 500){
+                    alert(this.responseText);
+                }
+            }
+            
+            ajax.send(formData);
+
+            return false;
+        }
+    </script>
 </main>
 @endsection

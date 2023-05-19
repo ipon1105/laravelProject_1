@@ -14,11 +14,16 @@ class UserRegistrationController extends Controller
     }
 
     public function submit(UserRegistrationRequest $request) {
+ 
         $request->validated();
         $user = User::create($request->getCredentials());
 
         auth()->login($user);
         
-        return redirect()->route('test');
+        // return redirect()->route('test');
+        return response()->json([
+            'status' => 'Успех',
+            'message' => 'Вы зарегистрированы',
+        ]);
     }
 }

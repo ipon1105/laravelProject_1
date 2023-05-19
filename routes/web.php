@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\User;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AdminController;
@@ -60,3 +63,14 @@ Route::post('/user/registration/submit',    [UserRegistrationController::class, 
 
 // Выход
 Route::get('/logout', [AdminLogoutController::class,    'logout'])->middleware('auth')->name('logout');
+
+Route::get('/getLogin/{login}', function($login){
+    $message = [
+        'empty'=> false, 
+        'status' => 'Ошибка',
+        'message' => 'Такой пользователь уже существует',
+    ];
+    $message['empty'] = (User::where('email', '=', $login)->first() == null);
+
+    return response()->json($message);
+});
