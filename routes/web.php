@@ -31,7 +31,6 @@ Route::get('/study',    [StudyController::class,    'show'])->name('study');
 Route::get('/test',     [TestController::class,     'show'])->name('test');
 Route::get('/guess',    [GuessController::class,    'show'])->name('guess');
 Route::get('/blog',     [BlogController::class,     'show'])->name('blog');
-Route::get('/blog/view/{page}', [BlogController::class,     'index'] )->name('blog-index');
 Route::get('/blog/edit',[BlogEditController::class, 'show'])->middleware('auth')->name('blog-edit');
 
 Route::post('/contact/submit',      [ContactController::class,  'submit'])->name('contact-form');

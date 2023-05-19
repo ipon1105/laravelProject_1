@@ -1,4 +1,4 @@
-@extends('layout.blogbase')
+@extends('layout.adminbase')
 
 @section('links')
 @endsection
