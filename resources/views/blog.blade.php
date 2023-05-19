@@ -18,7 +18,21 @@
        <div class="h1 leftmar">{{$note->header}}</div>
        <p>{{$note->content}}</p>
        <p>{{$note->created_at}}</p>
-    </div>
+   </div>
+   @isset($comments)   
+      @foreach ($comments as $comment)
+         <div class="topmar">
+            <p>Дата и время: {{$comment->created_at}}</p>
+            <p>Автор: {{$comment->author}}</p>
+            <p>Содержание: {{$comment->content}}</p>
+         </div>
+      @endforeach
+   @endisset
+   @auth
+      <a class="leftmar button">Оставить комментарий</a>
+   @endauth
+   
+
  </div>
  @endforeach
 
