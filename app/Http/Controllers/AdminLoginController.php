@@ -15,21 +15,10 @@ class AdminLoginController extends Controller
 
     public function submit(LoginRequest $request) {
         $credentials = $request->getCredentials();
-        
-        $email = $request->input('email');
-        $password = $request->input('password');
 
         if (!Auth::attempt($credentials))
             return redirect()->route('login')->withErrors(['email' => 'Не верный логин или пароль.']);
-            
-
-        // if(!Auth::validate($credentials)):
-        //     
-        // endif;
-
-        // $user = Auth::getProvider()->retrieveByCredentials($credentials);
-
-        // Auth::login($user);
+    
 
         return redirect()->route('admin');
     }

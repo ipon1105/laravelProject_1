@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use Illuminate\Http\Request;
 use App\Http\Requests\TestRequest;
 use App\Models\Test;
@@ -43,7 +44,11 @@ class TestController extends Controller {
         if (strcmp($request->input('input_1'), 'Треугольной') == 0) {$i = $i + 1; $test->is3Correctly = true;}
 
         $test->save();
+        
+        $res = 'Ваш тест отправлен.';
+        if (Auth::check())
+            $res .= 'Результат: '.$i.'/3';
 
-        return redirect()->route('test')->with('success', 'Ваш тест отправлен. Результат: '.$i.'/3');
+        return redirect()->route('test')->with('success', $res);
     }
 }

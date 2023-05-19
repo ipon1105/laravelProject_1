@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Hash;
 use Illuminate\Foundation\Http\FormRequest;
 
-class RegisterRequest extends FormRequest
+class UserRegistrationRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -31,15 +31,16 @@ class RegisterRequest extends FormRequest
             'password_confirmation' => 'required|same:password',
         ];
     }
+
     public function getCredentials()
     {
         return [
-            'email' => $this->get('email'),
-            'password' => Hash::make($this->get('password')),
-            'name' => $this->get('name'),
-            'surname' => $this->get('surname'),
-            'patronymic' => $this->get('patronymic'),
-            'is_admin' => true,
+            'email' => $this->input('email'),   
+            'password' => Hash::make($this->input('password')),
+            'name' => $this->input('name'),
+            'surname' => $this->input('surname'),
+            'patronymic' => $this->input('patronymic'),
+            'is_admin' => false,
         ];
     }
 }

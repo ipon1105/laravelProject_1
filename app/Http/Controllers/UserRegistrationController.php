@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRegistrationRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserRegistrationController extends Controller
@@ -11,12 +13,12 @@ class UserRegistrationController extends Controller
         return view('user-registration');
     }
 
-    public function submit(Request $request) {
-        return view('user-registration');
-        // $user = User::create($request->validated());
+    public function submit(UserRegistrationRequest $request) {
+        $request->validated();
+        $user = User::create($request->getCredentials());
 
-        // auth()->login($user);
-
-        // return redirect()->route('admin');
+        auth()->login($user);
+        
+        return redirect()->route('test');
     }
 }

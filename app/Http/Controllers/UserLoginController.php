@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserLoginRequest;
+use Auth;
 use Illuminate\Http\Request;
 
 class UserLoginController extends Controller
@@ -11,25 +13,12 @@ class UserLoginController extends Controller
         return view('user-login');
     }
 
-    public function submit(Request $request) {
-        return view('user-login');
-        // $credentials = $request->getCredentials();
+    public function submit(UserLoginRequest $request) {
+        $credentials = $request->getCredentials();
         
-        // $email = $request->input('email');
-        // $password = $request->input('password');
-
-        // if (!Auth::attempt($credentials))
-        //     return redirect()->route('login')->withErrors(['email' => 'Не верный логин или пароль.']);
-            
-
-        // if(!Auth::validate($credentials)):
-        //     
-        // endif;
-
-        // $user = Auth::getProvider()->retrieveByCredentials($credentials);
-
-        // Auth::login($user);
-
-        // return redirect()->route('admin');
+        if (!Auth::attempt($credentials))
+            return redirect()->route('user-login')->withErrors(['email' => 'Не верный логин или пароль.']);
+        
+        return redirect()->route('test');
     }
 }

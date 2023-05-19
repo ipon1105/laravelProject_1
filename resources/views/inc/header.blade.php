@@ -2,8 +2,14 @@
 <header>
         <div>
             <h1 id="page">@yield('title')</h1>
-            <a href="{{route('user-login')}}">Вход</a>
-            <a href="{{route('user-registration')}}">Регистрация</a>
+            @auth
+                <a href="{{ route('logout') }}">Выйти</a>
+                User: {{auth()->user()->surname}} {{auth()->user()->name}} {{auth()->user()->patronymic}}
+            @endauth
+            @guest
+                <a href="{{route('user-login')}}">Вход</a>
+                <a href="{{route('user-registration')}}">Регистрация</a>
+            @endguest
             <!-- Навигация с гиперссылками -->
             <nav>
                 <ul>
