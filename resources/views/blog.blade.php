@@ -7,17 +7,17 @@
 
 @section('title')Библиотека записей@endsection
 
-
 @section('body')
 <div id="modalWin" class="modal">
    <div class="modal-window">
-      МОДАЛЬНОЕ ОКНО
-
+      <p>Комментарий ></p><br>
+      <textarea class="leftmar" id="comment" name="comment" rows="5"></textarea>
+      <a class="button leftmar">Отправить</a>
       <button class="btn-close" data-easy-toggle="#modalWin" data-easy-class="show">X</button>
    </div>
-
    <div class="overlay" data-easy-toggle="#modalWin" data-easy-class="show"></div>
 </div>
+
 <script>
    
 </script>
