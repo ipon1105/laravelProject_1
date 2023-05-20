@@ -11,15 +11,26 @@
 <div id="modalWin" class="modal">
    <div class="modal-window">
       <p>Комментарий ></p><br>
-      <textarea class="leftmar" id="comment" name="comment" rows="5"></textarea>
-      <a class="button leftmar">Отправить</a>
+      <textarea class="leftmar" id="comment" name="comment" rows="5"></textarea><br>
+      <a class="button topmar leftmar" onclick="send()">Отправить</a>
       <button class="btn-close" data-easy-toggle="#modalWin" data-easy-class="show">X</button>
    </div>
    <div class="overlay" data-easy-toggle="#modalWin" data-easy-class="show"></div>
 </div>
-
-<script>
-   
+ 
+<script  type="text/javascript">
+   function send(){
+      fetch("/blog")
+      .then(data => {
+         alert("good");
+      });
+      
+      // if (response.ok) {
+      //    alert("good");
+      // } else {
+      //    alert("bed");
+      // }
+   }
 </script>
  
 

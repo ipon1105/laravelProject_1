@@ -74,19 +74,7 @@
                 }
             }
             ajax.send();
-
-            // $.ajax({
-            //     type: "GET",
-            //     url: "/getLogin",
-            //     dataType: "json",
-            //     data: {'login': login},
-            //     success: function(data){
-            //         alert('seccess' + data);
-            //         var data1 = JSON.parse(data);
-            //         if (!data1.empty)
-            //             alert(data1.status + " - " + data1.message);
-            //     }
-            // });
+            
             return false;
         }
 
