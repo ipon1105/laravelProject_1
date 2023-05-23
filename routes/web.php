@@ -23,6 +23,8 @@ use App\Http\Controllers\AdminLogoutController;
 use App\Http\Controllers\UserLoginController;
 use App\Http\Controllers\UserRegistrationController;
 
+use App\Models\Comment;
+
 Route::get('/',         [AboutController::class,    'show']);
 Route::get('/about',    [AboutController::class,    'show'])->name('about');
 Route::get('/contact',  [ContactController::class,  'show'])->name('contact');
@@ -73,4 +75,36 @@ Route::get('/getLogin/{login}', function($login){
     $message['empty'] = (User::where('email', '=', $login)->first() == null);
 
     return response()->json($message);
+});
+
+// Загрузить комментарии для поста id
+Route::get('/blog/comments', function($id) {
+    $comments = Comment::all();
+    
+    $xml = new XMLWriter();
+    $xml->openMemory();
+    $xml->startDocument();
+    $xml->startElement('comments');
+    /*
+    $xml = new XMLWriter();
+    $xml->openMemory();
+    $xml->startDocument();
+    $xml->startElement('users');
+    foreach($users as $user) {
+        $xml->startElement('data');
+        $xml->writeAttribute('id', $user->id);
+        $xml->writeAttribute('firstname', $user->firstname);
+        $xml->writeAttribute('lastname', $user->lastname);
+        $xml->writeAttribute('email', $user->email);
+        $xml->endElement();
+    }
+    $xml->endElement();
+    $xml->endDocument();
+
+    $content = $xml->outputMemory();
+    $xml = null;
+
+    return response($content)->header('Content-Type', 'text/xml');
+    */
+    return 'hi';
 });

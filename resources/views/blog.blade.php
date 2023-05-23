@@ -22,7 +22,11 @@
    function send(){
       fetch("/blog")
       .then(data => {
-         alert("good");
+         alert("data1");
+         data.text().then(data2 => {
+            console.log();
+            alert("good" + data2.text());
+         });
       });
       
       // if (response.ok) {
@@ -30,6 +34,18 @@
       // } else {
       //    alert("bed");
       // }
+   }
+
+   // Загружаем 
+   function load(){
+      fetch('/blog/comments')
+         .then(response => response.text())
+         .then(data => {
+            const parser = new DOMParser();
+            const xml = parser.parseFromString(data, "application/xml");
+            console.log(xml);
+         })
+         .catch(console.error);
    }
 </script>
  
