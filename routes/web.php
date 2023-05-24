@@ -22,8 +22,8 @@ use App\Http\Controllers\AdminRegisterController;
 use App\Http\Controllers\AdminLogoutController;
 use App\Http\Controllers\UserLoginController;
 use App\Http\Controllers\UserRegistrationController;
+use App\Http\Controllers\CommentAddController;
 
-use App\Models\Comment;
 
 Route::get('/',         [AboutController::class,    'show']);
 Route::get('/about',    [AboutController::class,    'show'])->name('about');
@@ -78,49 +78,44 @@ Route::get('/getLogin/{login}', function($login){
 });
 
 // Отправить данные в базу данных
-Route::post('/blog/comments/add', function($request) {
-    $comment = new Comment();
-    
-    $comment->user_id = Auth::id();
-    $comment->note_id = $request->input('note_id');
-    $comment->content = $request->input('comment');
-
-    $comment->save();
-
-    return 'result';
-})->name('add-comment');
+Route::post('/blog/comments/add', [CommentAddController::class, 'func']);
 
 // Загрузить комментарии для поста id
 Route::get('/blog/comments/load/{id}', function($id) {
-    $comment = DB::table('comments')->where('note_id', $id)->first();
-    if ($comment == null){
+    $comments = DB::table('comments')->where('note_id', $id)->get();
+    
+    if ($comments == null){
         $result = 'fail';
         return response($result)->header('Content-Type', 'text/xml');
     }
-
-    // Высчитываем ФИО
-    $user = User::find($comment->user_id);
-    $username = 
-        $user->surname    . ' '  . 
-        $user->name       . ' '  . 
-        $user->patronymic . ' (' . 
-        $comment->user_id . ')'  ;
 
     // Создаём XML
     $xml = new XMLWriter();
     $xml->openMemory();
     $xml->startDocument();
-
     $xml->startElement('comments');
-    $xml->writeAttribute('date',    $comment->created_at);  // Дата
-    $xml->writeAttribute('name',    $username);             // ФИО
-    $xml->writeAttribute('content', $comment->content);     // Комментарий
-    $xml->endElement();
 
+    // Заполняем XML
+    foreach($comments as $comment){
+        // Высчитываем ФИО
+        $user = User::find($comment->user_id);
+        $username = 
+            $user->surname    . ' '  . 
+            $user->name       . ' '  . 
+            $user->patronymic . ' (' . 
+            $comment->user_id . ')'  ;
+
+        $xml->startElement('comment');
+        $xml->writeElement('name',    $username);             // ФИО
+        $xml->writeElement('date',    $comment->created_at);  // Дата
+        $xml->writeElement('content', $comment->content);     // Комментарий
+        $xml->endElement();
+    }
+    $xml->endElement();
     $xml->endDocument();
     $result = $xml->outputMemory();
     $xml = null;
-
+    
     // Возвращаем XML
     return response($result)->header('Content-Type', 'text/xml');
 });
