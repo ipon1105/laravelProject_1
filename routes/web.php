@@ -77,34 +77,50 @@ Route::get('/getLogin/{login}', function($login){
     return response()->json($message);
 });
 
-// Загрузить комментарии для поста id
-Route::get('/blog/comments', function($id) {
-    $comments = Comment::all();
+// Отправить данные в базу данных
+Route::post('/blog/comments/add', function($request) {
+    $comment = new Comment();
     
-    $xml = new XMLWriter();
-    $xml->openMemory();
-    $xml->startDocument();
-    $xml->startElement('comments');
-    /*
-    $xml = new XMLWriter();
-    $xml->openMemory();
-    $xml->startDocument();
-    $xml->startElement('users');
-    foreach($users as $user) {
-        $xml->startElement('data');
-        $xml->writeAttribute('id', $user->id);
-        $xml->writeAttribute('firstname', $user->firstname);
-        $xml->writeAttribute('lastname', $user->lastname);
-        $xml->writeAttribute('email', $user->email);
-        $xml->endElement();
-    }
-    $xml->endElement();
-    $xml->endDocument();
+    $comment->user_id = Auth::id();
+    $comment->note_id = $request->input('note_id');
+    $comment->content = $request->input('comment');
 
-    $content = $xml->outputMemory();
+    $comment->save();
+
+    return 'result';
+})->name('add-comment');
+
+// Загрузить комментарии для поста id
+Route::get('/blog/comments/load/{id}', function($id) {
+    $comment = DB::table('comments')->where('note_id', $id)->first();
+    if ($comment == null){
+        $result = 'fail';
+        return response($result)->header('Content-Type', 'text/xml');
+    }
+
+    // Высчитываем ФИО
+    $user = User::find($comment->user_id);
+    $username = 
+        $user->surname    . ' '  . 
+        $user->name       . ' '  . 
+        $user->patronymic . ' (' . 
+        $comment->user_id . ')'  ;
+
+    // Создаём XML
+    $xml = new XMLWriter();
+    $xml->openMemory();
+    $xml->startDocument();
+
+    $xml->startElement('comments');
+    $xml->writeAttribute('date',    $comment->created_at);  // Дата
+    $xml->writeAttribute('name',    $username);             // ФИО
+    $xml->writeAttribute('content', $comment->content);     // Комментарий
+    $xml->endElement();
+
+    $xml->endDocument();
+    $result = $xml->outputMemory();
     $xml = null;
 
-    return response($content)->header('Content-Type', 'text/xml');
-    */
-    return 'hi';
+    // Возвращаем XML
+    return response($result)->header('Content-Type', 'text/xml');
 });
