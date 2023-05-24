@@ -23,6 +23,7 @@
 </div>
 
 <script type="text/javascript">
+   var noteID = 1;
    document.getElementById('close_btn').onclick = closeModal;
 
    function closeModal(){
@@ -30,18 +31,27 @@
       modal.classList.remove("show");
    }
 
-   function openModal(){
+   function openModal(id){
       var modal = document.getElementById('modalWin');
       modal.classList.add("show");
+
+      noteID = id;
+
+      console.log(id);
    }
 
    let add_url = '/blog/comments/add';
    let load_url = '/blog/comments/load';
-   var noteID = 1;
 
    // Загрузка комментариев для записи по id
-   function load_comments_from(note_id)
-   {
+   function load_comments_from(note_id) {
+      var comments_blocks = document.getElementsByClassName('comments_block');
+      var comments_block = comments_blocks[comments_blocks.length - 1];
+      console.log(comments_block);
+      if (comments_block.childNodes.length > 0) {
+         comments_block.innerHTML = "";
+      }
+      
       fetch(load_url + '/' + note_id)
          .then(response => response.text())
          .then(data => {
@@ -63,24 +73,18 @@
                var name = document.createElement("p");
                var content = document.createElement("p");
                
-               date.appendChild(document.createTextNode(""));
-               name.appendChild(document.createTextNode("name"));
-               content.appendChild(document.createTextNode("content"));
+               date.appendChild(document.createTextNode(element.children[1].innerHTML));
+               name.appendChild(document.createTextNode(element.children[0].innerHTML));
+               content.appendChild(document.createTextNode(element.children[2].innerHTML));
                
                comment.appendChild(date);
                comment.appendChild(name);
                comment.appendChild(content);
 
-               (document.getElementById('comments_block')).appendChild(comment);
+               comments_block.appendChild(comment);
             });
-            
-            
          })
          .catch(console.error);
-   }
-
-   function setNoteId(id){
-      noteID = id;
    }
 
    function onsubmitForm(text){
@@ -100,6 +104,7 @@
          .then(data => data.text())
          .then(result => {
             closeModal();
+            load_comments_from(noteID);
          })
          .catch(console.error);
    }
@@ -109,23 +114,25 @@
 @foreach ($notes as $note)
    <div class="container leftmar rightmar topmar">
       <div class="square">
-      @isset($note->filename)
-         <img src="{{ asset('/storage/'. $note->filename) }}" alt="articleImage" class="mask">
-      @endisset
-      <div class="h1 leftmar">{{$note->header}}</div>
-      <p>{{$note->content}}</p>
-      <p>{{$note->created_at}}</p>
+         @isset($note->filename)
+            <img src="{{ asset('/storage/'. $note->filename) }}" alt="articleImage" class="mask">
+         @endisset
+         <div class="h1 leftmar">{{$note->header}}</div>
+         <p>{{$note->content}}</p>
+         <p>{{$note->created_at}}</p>
       
-      {{-- Для комментариев --}}
-      <h3 class="leftmar">Комментарии ></h3>
-      <div class="leftmar rightmar" id="comments_block" >
+         {{-- Для комментариев --}}
+         <h3 class="leftmar">Комментарии ></h3>
+         <div class="leftmar rightmar comments_block" >
+         </div>
+         
          {{-- Загрузка комментариев --}}
          <script type="text/javascript">load_comments_from({{$note->id}});</script>
-      </div>
 
-      @auth
-         <a class="leftmar bottommar button" onclick="setNoteId({{$note->id}}); openModal();">Оставить комментарий</a>
-      @endauth
+         @auth
+            <a class="leftmar bottommar button" onclick="openModal({{$note->id}});">Оставить комментарий</a>
+         @endauth
+      </div>
    </div>
 @endforeach
 
