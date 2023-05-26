@@ -22,6 +22,39 @@
    <div class="overlay" data-easy-toggle="#modalWin" data-easy-class="show"></div>
 </div>
 
+<div id="changeModal" class="modal">
+   <div class="modal-window">
+      <iframe id="modalIFrame"class="topmar leftmar bottommar" name="iframe">
+         
+      </iframe>
+      <button id="changeModalClose" class="btn-close" data-easy-toggle="#modalWin" data-easy-class="show">X</button>
+   </div>
+   <div class="overlay" data-easy-toggle="#modalWin" data-easy-class="show"></div>
+</div>
+
+<script type="text/javascript">
+   var iFrame = document.getElementById('modalIFrame');
+   var changeModal = document.getElementById('changeModal');
+   var changeClose = document.getElementById('changeModalClose');
+
+   // Закрываем модальное окно
+   changeClose.onclick = closeChange;
+   function closeChange(){
+      changeModal.classList.remove("show");
+   }
+
+   // Открываем модальное окно
+   function openChange(id){
+      changeModal.classList.add("show");
+      iFrame.contentWindow.postMessage("message", "*");
+   }
+   // Ловим сообщение из IFrame
+   window.onmessage = function(e) {
+      console.log('Get data from IFRAME.' + e.data);
+   };
+
+</script>
+
 <script type="text/javascript">
    var noteID = 1;
    document.getElementById('close_btn').onclick = closeModal;
@@ -34,15 +67,13 @@
    function openModal(id){
       var modal = document.getElementById('modalWin');
       modal.classList.add("show");
-
       noteID = id;
-
-      console.log(id);
    }
 
    let add_url = '/blog/comments/add';
    let load_url = '/blog/comments/load';
-
+   
+   
    // Загрузка комментариев для записи по id
    function load_comments_from(note_id) {
       var comments_blocks = document.getElementsByClassName('comments_block');
@@ -51,7 +82,7 @@
       if (comments_block.childNodes.length > 0) {
          comments_block.innerHTML = "";
       }
-      
+
       fetch(load_url + '/' + note_id)
          .then(response => response.text())
          .then(data => {
@@ -114,6 +145,10 @@
 @foreach ($notes as $note)
    <div class="container leftmar rightmar topmar">
       <div class="square">
+
+         <a href="/blog/comment/{{$note->id}}/change" target="iframe" onclick="openChange({{$note->id}})">Изменить</a>
+         <a href="/blog/comment/{{$note->id}}/change" target="iframe" onclick="openChange({{$note->id}})">Удалить</a>
+
          @isset($note->filename)
             <img src="{{ asset('/storage/'. $note->filename) }}" alt="articleImage" class="mask">
          @endisset

@@ -119,3 +119,7 @@ Route::get('/blog/comments/load/{id}', function($id) {
     // Возвращаем XML
     return response($result)->header('Content-Type', 'text/xml');
 });
+
+Route::get('/blog/comment/{id}/change', function($id){
+    return view('change');
+});
