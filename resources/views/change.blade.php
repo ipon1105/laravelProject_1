@@ -6,17 +6,26 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
     </head>
     <script type="text/javascript">
+        // Уникальный идентификатор поста на редактирование 
+        var id = null;
+
+        // Принимаем информацию
         window.onmessage = function(e) {
-            console.log('Get data from TOP.' + e.data);
+            // Приём сообщений только от локальной сети
+            if (e.origin != 'http://127.0.0.1:8000')
+                return;
+
+            // Приводим поступившее сообщение в число
+            id = Number(e.data);
         };
 
         function change(){
-            var obj = {
-                header: document.getElementById('changeHeader').value,
-                content: document.getElementById('changeContent').value,
-            };
+            // Запоминаем новые данные
+            var newHeader = document.getElementById('changeHeader').value;
+            var newContent = document.getElementById('changeContent').value;
             
-            top.postMeassage(JSON.stringify(obj), '/blog');
+
+            window.top.postMeassage('doc', '*');
         }
     </script>
 
@@ -33,5 +42,5 @@
     </div>
 
     {{-- Изменить --}}
-    <button class="button topmar leftmar bottommar" onclick="change()">Изменить</a>
+    <button id="changeButton" class="button topmar leftmar bottommar" onclick="change()">Изменить</a>
 </html>

@@ -24,7 +24,7 @@
 
 <div id="changeModal" class="modal">
    <div class="modal-window">
-      <iframe id="modalIFrame"class="topmar leftmar bottommar" name="iframe">
+      <iframe id="modalIFrame"class="topmar leftmar bottommar" style="height: 300px;" name="iframe" src="/blog/comment/change">
          
       </iframe>
       <button id="changeModalClose" class="btn-close" data-easy-toggle="#modalWin" data-easy-class="show">X</button>
@@ -33,26 +33,32 @@
 </div>
 
 <script type="text/javascript">
+   var iFrame_post_id = null;
    var iFrame = document.getElementById('modalIFrame');
    var changeModal = document.getElementById('changeModal');
    var changeClose = document.getElementById('changeModalClose');
-
+   
    // Закрываем модальное окно
    changeClose.onclick = closeChange;
    function closeChange(){
       changeModal.classList.remove("show");
+
+      // Обновляем комментарии
+      if (iFrame_post_id == null)
+         return;
+      load_comments_to(iFrame_post_id);
    }
 
    // Открываем модальное окно
    function openChange(id){
       changeModal.classList.add("show");
-      iFrame.contentWindow.postMessage("message", "*");
-   }
-   // Ловим сообщение из IFrame
-   window.onmessage = function(e) {
-      console.log('Get data from IFRAME.' + e.data);
-   };
 
+      // Запоминаем уникальный идентификатор поста
+      iFrame_post_id = id;
+
+      // Отправляем уникальный идентификатор поста в iFrame
+      iFrame.contentWindow.postMessage(id, '*');
+   }
 </script>
 
 <script type="text/javascript">
@@ -75,19 +81,24 @@
    
    
    // Загрузка комментариев для записи по id
-   function load_comments_from(note_id) {
+   function load_comments_to(note_id) {
+      // Получаем все блоки для комментариев
       var comments_blocks = document.getElementsByClassName('comments_block');
-      var comments_block = comments_blocks[comments_blocks.length - 1];
-      console.log(comments_block);
+
+      // Получаем блок комментариев для данного поста
+      var comments_block = document.getElementById('comments_block_'+note_id);
+      
+      // Если Блок для комментариев не пустой, то отчищаем его, что бы заполнить заново
       if (comments_block.childNodes.length > 0) {
          comments_block.innerHTML = "";
       }
 
+      // Выполняем ассинхронное заполнение
       fetch(load_url + '/' + note_id)
          .then(response => response.text())
          .then(data => {
+            // Если вернулся fail, то завершаем заполнение
             if (data == 'fail'){
-               console.log('Для записи с id = ' + note_id + ' нет записей.' );
                return;
             }
             
@@ -95,6 +106,7 @@
             let xmlDom = parser.parseFromString(data, "application/xml");
             let comments = xmlDom.querySelectorAll('comment');
 
+            // Для каждого комментария создаём блок комментария с необходимыми полями
             comments.forEach(element => {
                var comment = document.createElement("div");
                var classattrib = "inset 12px 222px 2px 2px rgba(1,2,111,11)";
@@ -135,7 +147,7 @@
          .then(data => data.text())
          .then(result => {
             closeModal();
-            load_comments_from(noteID);
+            load_comments_to(noteID);
          })
          .catch(console.error);
    }
@@ -146,8 +158,8 @@
    <div class="container leftmar rightmar topmar">
       <div class="square">
 
-         <a href="/blog/comment/{{$note->id}}/change" target="iframe" onclick="openChange({{$note->id}})">Изменить</a>
-         <a href="/blog/comment/{{$note->id}}/change" target="iframe" onclick="openChange({{$note->id}})">Удалить</a>
+         <a href="/blog/comment/change" target="iframe" onclick="openChange({{$note->id}})">Изменить</a>
+         <a href="/blog/comment/change" target="iframe" onclick="openChange({{$note->id}})">Удалить</a>
 
          @isset($note->filename)
             <img src="{{ asset('/storage/'. $note->filename) }}" alt="articleImage" class="mask">
@@ -158,11 +170,11 @@
       
          {{-- Для комментариев --}}
          <h3 class="leftmar">Комментарии ></h3>
-         <div class="leftmar rightmar comments_block" >
+         <div id="comments_block_{{$note->id}}" class="leftmar rightmar comments_block" >
          </div>
          
          {{-- Загрузка комментариев --}}
-         <script type="text/javascript">load_comments_from({{$note->id}});</script>
+         <script type="text/javascript">load_comments_to({{$note->id}});</script>
 
          @auth
             <a class="leftmar bottommar button" onclick="openModal({{$note->id}});">Оставить комментарий</a>

@@ -120,6 +120,6 @@ Route::get('/blog/comments/load/{id}', function($id) {
     return response($result)->header('Content-Type', 'text/xml');
 });
 
-Route::get('/blog/comment/{id}/change', function($id){
+Route::get('/blog/comment/change', function(){
     return view('change');
 });
