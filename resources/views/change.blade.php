@@ -31,7 +31,7 @@
 
             var header = document.getElementById('changeHeader' ).value;
             var content = document.getElementById('changeContent').value
-            if (header == null || isNaN(header) || header.length == 0)
+            if (header == null || header.length == 0)
                 return;
             
             // Формируем новые данные
