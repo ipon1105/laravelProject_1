@@ -3,7 +3,9 @@
     <head>
         <meta charset="utf-8">
         <title>iframe</title>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
     </head>
     <script type="text/javascript">
         // Уникальный идентификатор поста на редактирование 
@@ -16,16 +18,44 @@
                 return;
 
             // Приводим поступившее сообщение в число
-            id = Number(e.data);
+            var id_ = Number(e.data);
+            if (isNaN(id_) || id_ == null)
+                return;
+
+            id = id_;
         };
 
         function change(){
-            // Запоминаем новые данные
-            var newHeader = document.getElementById('changeHeader').value;
-            var newContent = document.getElementById('changeContent').value;
-            
+            if (id == null)
+                return;
 
-            window.top.postMeassage('doc', '*');
+            var header = document.getElementById('changeHeader' ).value;
+            var content = document.getElementById('changeContent').value
+            if (header == null || isNaN(header) || header.length == 0)
+                return;
+            
+            // Формируем новые данные
+            var formData = new FormData();
+            formData.append('id', id);
+            formData.append('header',  header);
+            formData.append('content', content);
+
+            // Формируем параметры запроса
+            const options = {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                },
+            };
+
+            // Выполняем запрос
+            fetch('/blog/comment/change/post/'+id, options)
+                .then(data => data.text())
+                .then(result => {
+                    top.postMessage(header + '\n' + content);
+                })
+                .catch(console.error);
         }
     </script>
 

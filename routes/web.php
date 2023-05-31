@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Comment;
+use App\Models\Note;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -120,6 +122,14 @@ Route::get('/blog/comments/load/{id}', function($id) {
     return response($result)->header('Content-Type', 'text/xml');
 });
 
-Route::get('/blog/comment/change', function(){
+Route::get('/blog/comment/change/get/{id}', function(){
     return view('change');
 });
+Route::post('/blog/comment/change/post/{id}', function(Request $request){
+    $note = Note::find($request->id);
+    $note->header = $request->header;
+    $note->content = $request->content;
+    $note->save();
+
+    return response("good")->header('Content-Type', 'text/xml');
+})->name('change_post');

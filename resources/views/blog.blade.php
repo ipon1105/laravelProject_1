@@ -24,40 +24,74 @@
 
 <div id="changeModal" class="modal">
    <div class="modal-window">
-      <iframe id="modalIFrame"class="topmar leftmar bottommar" style="height: 300px;" name="iframe" src="/blog/comment/change">
+      <div id="iframe_block">
          
-      </iframe>
+      </div>
+      
       <button id="changeModalClose" class="btn-close" data-easy-toggle="#modalWin" data-easy-class="show">X</button>
    </div>
    <div class="overlay" data-easy-toggle="#modalWin" data-easy-class="show"></div>
 </div>
 
 <script type="text/javascript">
-   var iFrame_post_id = null;
-   var iFrame = document.getElementById('modalIFrame');
+   var iframe = null;
+   var iframe_post_id = null;
    var changeModal = document.getElementById('changeModal');
    var changeClose = document.getElementById('changeModalClose');
+   var changeBlock = document.getElementById('iframe_block');
    
+   window.onmessage = function(e){
+      // Приём сообщений только от локальной сети
+      if (e.origin != 'http://127.0.0.1:8000')
+         return;
+      
+      var str = ""+e.data;
+      if (str == null || str == "")
+         return;
+
+      var header = str.substring(0, str.indexOf('\n'));
+      var content = str.substring(str.indexOf('\n'), str.length);
+      if (header == null || header == "" || content == null || content == "")
+         return;
+
+      updateChange(header, content);
+      closeChange();
+   };
+
    // Закрываем модальное окно
    changeClose.onclick = closeChange;
    function closeChange(){
+      iframe = null;
+      changeBlock.innerHTML = "";
       changeModal.classList.remove("show");
 
       // Обновляем комментарии
-      if (iFrame_post_id == null)
+      if (iframe_post_id == null)
          return;
-      load_comments_to(iFrame_post_id);
+      load_comments_to(iframe_post_id);
+      iframe_post_id = null;
    }
 
    // Открываем модальное окно
    function openChange(id){
       changeModal.classList.add("show");
 
-      // Запоминаем уникальный идентификатор поста
-      iFrame_post_id = id;
+      iframe = document.createElement("iframe");
+      iframe.onload = function() { iframe.contentWindow.postMessage(""+id, '*'); };
+      iframe.onerror = function() { console.log("Что-то пошло не так."); };
+      iframe.src = "/blog/comment/change/get/"+id;
+      iframe_post_id = id;
 
-      // Отправляем уникальный идентификатор поста в iFrame
-      iFrame.contentWindow.postMessage(id, '*');
+      changeBlock.appendChild(iframe);
+   }
+
+   // Обновить блок поста
+   function updateChange(newHeader, newContent){
+      if (iframe_post_id == null || isNaN(iframe_post_id))
+         return;
+
+      document.getElementById( 'header_' + iframe_post_id).innerHTML = newHeader;
+      document.getElementById('content_' + iframe_post_id).innerHTML = newContent;
    }
 </script>
 
@@ -158,16 +192,18 @@
    <div class="container leftmar rightmar topmar">
       <div class="square">
 
-         <a href="/blog/comment/change" target="iframe" onclick="openChange({{$note->id}})">Изменить</a>
-         <a href="/blog/comment/change" target="iframe" onclick="openChange({{$note->id}})">Удалить</a>
-
+         @auth
+            <a onclick="openChange({{$note->id}})">Изменить</a>
+            <a href="/blog/comment/change/get/{{$note->id}}" target="iframe" onclick="openChange()">Удалить</a>
+         @endauth
+         
          @isset($note->filename)
             <img src="{{ asset('/storage/'. $note->filename) }}" alt="articleImage" class="mask">
          @endisset
-         <div class="h1 leftmar">{{$note->header}}</div>
-         <p>{{$note->content}}</p>
-         <p>{{$note->created_at}}</p>
-      
+         <div id="header_{{$note->id}}" class="h1 leftmar">{{$note->header}}</div>
+         <p id="content_{{$note->id}}">{{$note->content}}</p>
+         <p id="created_{{$note->id}}">{{$note->created_at}}</p>
+         
          {{-- Для комментариев --}}
          <h3 class="leftmar">Комментарии ></h3>
          <div id="comments_block_{{$note->id}}" class="leftmar rightmar comments_block" >
