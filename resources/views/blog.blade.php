@@ -194,17 +194,17 @@
 
          @auth
             @if($isAdmin)
-               <a onclick="openChange({{$note->id}})">Изменить</a>
-               <a href="{{ route('delete-post', $note->id) }}">Удалить</a>
+               <a onclick="openChange({{$note->id}})" class="leftmar button">Изменить</a>
+               <a href="{{ route('delete-post', $note->id) }}" class="button">Удалить</a>
             @endif
          @endauth 
 
          @isset($note->filename)
             <img src="{{ asset('/storage/'. $note->filename) }}" alt="articleImage" class="mask">
          @endisset
-         <div id="header_{{$note->id}}" class="h1 leftmar">{{$note->header}}</div>
-         <p id="content_{{$note->id}}">{{$note->content}}</p>
+         <h1 id="header_{{$note->id}}" class="h1 leftmar">{{$note->header}}</h1>
          <p id="created_{{$note->id}}">{{$note->created_at}}</p>
+         <p id="content_{{$note->id}}">{{$note->content}}</p>
          
          {{-- Для комментариев --}}
          <h3 class="leftmar">Комментарии ></h3>
