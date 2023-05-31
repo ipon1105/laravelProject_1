@@ -193,10 +193,12 @@
       <div class="square">
 
          @auth
-            <a onclick="openChange({{$note->id}})">Изменить</a>
-            <a href="/blog/comment/change/get/{{$note->id}}" target="iframe" onclick="openChange()">Удалить</a>
-         @endauth
-         
+            @if($isAdmin)
+               <a onclick="openChange({{$note->id}})">Изменить</a>
+               <a href="{{ route('delete-post', $note->id) }}">Удалить</a>
+            @endif
+         @endauth 
+
          @isset($note->filename)
             <img src="{{ asset('/storage/'. $note->filename) }}" alt="articleImage" class="mask">
          @endisset

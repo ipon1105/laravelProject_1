@@ -29,19 +29,24 @@ use App\Http\Controllers\CommentAddController;
 
 Route::get('/',         [AboutController::class,    'show']);
 Route::get('/about',    [AboutController::class,    'show'])->name('about');
-Route::get('/contact',  [ContactController::class,  'show'])->name('contact');
 Route::get('/history',  [HistoryController::class,  'show'])->name('history');
 Route::get('/home',     [HomeController::class,     'show'])->name('home');
 Route::get('/hobby',    [HobbyController::class,    'show'])->name('hobby');
 Route::get('/album',    [AlbumController::class,    'show'])->name('album');
 Route::get('/study',    [StudyController::class,    'show'])->name('study');
-Route::get('/test',     [TestController::class,     'show'])->name('test');
 Route::get('/guess',    [GuessController::class,    'show'])->name('guess');
 Route::get('/blog',     [BlogController::class,     'show'])->name('blog');
+Route::get('/blog/delete/{id}', [BlogController::class,     'delete'])->name('delete-post');
 Route::get('/blog/edit',[BlogEditController::class, 'show'])->middleware('auth')->name('blog-edit');
 
-Route::post('/contact/submit',      [ContactController::class,  'submit'])->name('contact-form');
-Route::post('/test/submit',         [TestController::class,     'submit'])->name('test-form');
+Route::controller(ContactController::class)->group(function () {
+    Route::get('/contact',  'show')->name('contact');
+    Route::post('/contact/submit', 'submit')->name('contact-form');
+});
+Route::controller(TestController::class)->group(function () {
+    Route::get('/test', 'show')->name('test');
+    Route::post('/test/submit', 'submit')->name('test-form');
+});
 Route::post('/guess/submit/add',    [GuessController::class,    'add']   )->name('guess-form-add');
 Route::post('/guess/submit/load',   [GuessController::class,    'load']  )->name('guess-form-load');
 Route::post('/blog/load',           [BlogEditController::class, 'load'])->name('blog-form');
