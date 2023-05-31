@@ -23,7 +23,7 @@
 </div>
 
 <div id="changeModal" class="modal">
-   <div class="modal-window">
+   <div class="modal-window" style="height: 300px">
       <div id="iframe_block">
          
       </div>
@@ -77,6 +77,7 @@
       changeModal.classList.add("show");
 
       iframe = document.createElement("iframe");
+      iframe.style="height: 300px; width: 550px; frameBorder='0'";
       iframe.onload = function() { iframe.contentWindow.postMessage(""+id, '*'); };
       iframe.onerror = function() { console.log("Что-то пошло не так."); };
       iframe.src = "/blog/comment/change/get/"+id;
