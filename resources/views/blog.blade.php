@@ -23,10 +23,26 @@
 </div>
 
 <div id="changeModal" class="modal">
-   <div class="modal-window" style="height: 300px">
+   <div class="modal-window" style="height: 600px">
       <div id="iframe_block">
-         
-      </div>
+         <form id="iframe_block_id" action="{{route('change_post')}}" method="post" target="my_iframe">
+            @csrf
+
+            {{-- Тема сообщения --}}
+            <div class="leftmar rightmar topmar container">
+               <div class="leftmar rightmar label">Тема записи ></div>
+               <input id="changeHeader" class="inputHeader" type="text" name="header">
+            </div>
+
+            {{-- Поле ввода текста --}}
+            <div class="leftmar rightmar topmar container">
+                  <div class="leftmar rightmar label">Текст записи ></div>
+                  <textarea id="changeContent" class="inputMsg" rows="7" name="content"></textarea>
+            </div>
+            <input type="submit" class="leftmar button topmar" value="Изменить">
+         </form>
+         <iframe id="IFRAME_MY_MEGA_IFRAME" name="my_iframe" style="display: none"></iframe>
+      </div> 
       
       <button id="changeModalClose" class="btn-close" data-easy-toggle="#modalWin" data-easy-class="show">X</button>
    </div>
@@ -38,31 +54,37 @@
    var iframe_post_id = null;
    var changeModal = document.getElementById('changeModal');
    var changeClose = document.getElementById('changeModalClose');
-   var changeBlock = document.getElementById('iframe_block');
+   var changeBlock = document.getElementById('iframe_block_id');
    
-   window.onmessage = function(e){
-      // Приём сообщений только от локальной сети
-      if (e.origin != 'http://127.0.0.1:8000')
+   document.getElementById('IFRAME_MY_MEGA_IFRAME').onload = function(e) {
+      var result = e.target.contentDocument.body.innerHTML;
+      if (result == "" || result == 'fail')
          return;
-      
-      var str = ""+e.data;
-      if (str == null || str == "")
-         return;
-
-      var header = str.substring(0, str.indexOf('\n'));
-      var content = str.substring(str.indexOf('\n'), str.length);
-      if (header == null || header == "" || content == null || content == "")
-         return;
-
       updateChange(header, content);
       closeChange();
-   };
+   }
+   // window.onmessage = function(e){
+   //    // Приём сообщений только от локальной сети
+   //    if (e.origin != 'http://127.0.0.1:8000')
+   //       return;
+      
+   //    var str = ""+e.data;
+   //    if (str == null || str == "")
+   //       return;
+
+   //    var header = str.substring(0, str.indexOf('\n'));
+   //    var content = str.substring(str.indexOf('\n'), str.length);
+   //    if (header == null || header == "" || content == null || content == "")
+   //       return;
+
+   //    updateChange(header, content);
+   //    closeChange();
+   // };
 
    // Закрываем модальное окно
    changeClose.onclick = closeChange;
    function closeChange(){
       iframe = null;
-      changeBlock.innerHTML = "";
       changeModal.classList.remove("show");
 
       // Обновляем комментарии
@@ -75,20 +97,13 @@
    // Открываем модальное окно
    function openChange(id){
       changeModal.classList.add("show");
+      changeBlock.innerHTML += "<input name='id' value=" + id +" type='hidden'>"
 
-      iframe = document.createElement("iframe");
-      iframe.style="height: 300px; width: 550px; frameBorder='0'";
-      iframe.onload = function() { iframe.contentWindow.postMessage(""+id, '*'); };
-      iframe.onerror = function() { console.log("Что-то пошло не так."); };
-      iframe.src = "/blog/comment/change/get/"+id;
-      iframe_post_id = id;
-
-      changeBlock.appendChild(iframe);
    }
 
    // Обновить блок поста
    function updateChange(newHeader, newContent){
-      if (iframe_post_id == null || isNaN(iframe_post_id))
+      if (iframe_post_id == null || isNaN(iframe_post_id) || newContent == null || isNaN(newContent) || newHeader == null || isNaN(newHeader))
          return;
 
       document.getElementById( 'header_' + iframe_post_id).innerHTML = newHeader;
@@ -192,7 +207,6 @@
 @foreach ($notes as $note)
    <div class="container leftmar rightmar topmar">
       <div class="square">
-
          @auth
             @if($isAdmin)
                <a onclick="openChange({{$note->id}})" class="leftmar button">Изменить</a>

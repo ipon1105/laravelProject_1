@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html>
+    {{-- Создать пустой iframe --}}
+    {{-- Отправить форму в iframe --}}
+    {{-- Достать из iframe данные --}}
     <head>
         <meta charset="utf-8">
         <title>iframe</title>

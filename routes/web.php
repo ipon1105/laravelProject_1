@@ -127,14 +127,14 @@ Route::get('/blog/comments/load/{id}', function($id) {
     return response($result)->header('Content-Type', 'text/xml');
 });
 
-Route::get('/blog/comment/change/get/{id}', function(){
-    return view('change');
-});
-Route::post('/blog/comment/change/post/{id}', function(Request $request){
+Route::post('/blog/comment/change/post', function(Request $request){
+    if ($request->header == null || $request->content == null || $request->id == null)
+        return 'fail';
+    
     $note = Note::find($request->id);
     $note->header = $request->header;
     $note->content = $request->content;
     $note->save();
-
-    return response("good")->header('Content-Type', 'text/xml');
+    
+    return $request->header.'\n'.$request->content;
 })->name('change_post');
