@@ -136,5 +136,5 @@ Route::post('/blog/comment/change/post', function(Request $request){
     $note->content = $request->content;
     $note->save();
     
-    return $request->header.'\n'.$request->content;
+    return $request->header."\n".$request->content;
 })->name('change_post');

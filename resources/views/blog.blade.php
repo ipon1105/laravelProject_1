@@ -57,9 +57,15 @@
    var changeBlock = document.getElementById('iframe_block_id');
    
    document.getElementById('IFRAME_MY_MEGA_IFRAME').onload = function(e) {
-      var result = e.target.contentDocument.body.innerHTML;
-      if (result == "" || result == 'fail')
+      var str = e.target.contentDocument.body.innerHTML;
+      if (str == "" || str == 'fail')
          return;
+
+      var header = str.substring(0, str.indexOf('\n'));
+      var content = str.substring(str.indexOf('\n'), str.length);
+      if (header == null || header == "" || content == null || content == "")
+      return;
+
       updateChange(header, content);
       closeChange();
    }
@@ -98,7 +104,7 @@
    function openChange(id){
       changeModal.classList.add("show");
       changeBlock.innerHTML += "<input name='id' value=" + id +" type='hidden'>"
-
+      iframe_post_id = id;
    }
 
    // Обновить блок поста
