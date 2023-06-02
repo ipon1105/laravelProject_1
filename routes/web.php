@@ -134,7 +134,20 @@ Route::post('/blog/comment/change/post', function(Request $request){
     $note = Note::find($request->id);
     $note->header = $request->header;
     $note->content = $request->content;
+    $path = $note->filename;
+
+    if ($request->delete != null) {
+        $path = null;
+    } else {
+        // Путь до файла если он есть
+        if ($request->file('inputFile') != null)
+            $path = $request->file('inputFile')->store('uploads', 'public');
+    }
+
+    $note->filename = $path;
     $note->save();
     
-    return $request->header."\n".$request->content;
+    if ($note->filename == null)
+        $path = "";
+    return $request->header . "\n" . $request->content . "\n" . $path;
 })->name('change_post');

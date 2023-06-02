@@ -23,10 +23,18 @@
 </div>
 
 <div id="changeModal" class="modal">
-   <div class="modal-window" style="height: 600px">
+   <div class="modal-window" style="height: 900px">
       <div id="iframe_block">
-         <form id="iframe_block_id" action="{{route('change_post')}}" method="post" target="my_iframe">
+         <form id="iframe_block_id" enctype="multipart/form-data" action="{{route('change_post')}}" method="post" target="my_iframe">
             @csrf
+
+            {{-- Прикрепить изображение --}}
+            <div class="leftmar rightmar topmar container">
+               <div class="leftmar rightmar label">Прикрепить изображение ></div>
+               <input class="inputHeader" type="file" name="inputFile">
+            </div>
+            <p>Удалить изображение</p> 
+            <input class="leftmar" id="del" type="checkbox" name="delete" value="yes">
 
             {{-- Тема сообщения --}}
             <div class="leftmar rightmar topmar container">
@@ -60,32 +68,20 @@
       var str = e.target.contentDocument.body.innerHTML;
       if (str == "" || str == 'fail')
          return;
-
+      
       var header = str.substring(0, str.indexOf('\n'));
-      var content = str.substring(str.indexOf('\n'), str.length);
-      if (header == null || header == "" || content == null || content == "")
-      return;
+      var content = str.substring(str.indexOf('\n'), str.lastIndexOf('\n'));
+      var image_src = str.substring(str.lastIndexOf('\n'), str.length);
+      console.log('image = ' + image_src);
+      if (image_src == "")
+         image_src = null;
 
-      updateChange(header, content);
+      if (header == null || header == "" || content == null || content == "")
+         return;
+
+      updateChange(header, content, image_src);
       closeChange();
    }
-   // window.onmessage = function(e){
-   //    // Приём сообщений только от локальной сети
-   //    if (e.origin != 'http://127.0.0.1:8000')
-   //       return;
-      
-   //    var str = ""+e.data;
-   //    if (str == null || str == "")
-   //       return;
-
-   //    var header = str.substring(0, str.indexOf('\n'));
-   //    var content = str.substring(str.indexOf('\n'), str.length);
-   //    if (header == null || header == "" || content == null || content == "")
-   //       return;
-
-   //    updateChange(header, content);
-   //    closeChange();
-   // };
 
    // Закрываем модальное окно
    changeClose.onclick = closeChange;
@@ -108,12 +104,17 @@
    }
 
    // Обновить блок поста
-   function updateChange(newHeader, newContent){
-      if (iframe_post_id == null || isNaN(iframe_post_id) || newContent == null || isNaN(newContent) || newHeader == null || isNaN(newHeader))
+   function updateChange(newHeader, newContent, image_src = null){
+      if (iframe_post_id == null || isNaN(iframe_post_id) || newContent == null || isNaN(newContent) || newHeader == null || isNaN(newHeader) || image_src == null )
          return;
-
+      
+      image_src.replace('\n', '');
       document.getElementById( 'header_' + iframe_post_id).innerHTML = newHeader;
       document.getElementById('content_' + iframe_post_id).innerHTML = newContent;
+      document.getElementById('image_' + iframe_post_id).src = "{{asset('/storage/')}}" + '/' + image_src;
+      document.getElementById('image_' + iframe_post_id).alt = "";
+      // "asset('/storage/')";
+
    }
 </script>
 
@@ -217,12 +218,11 @@
             @if($isAdmin)
                <a onclick="openChange({{$note->id}})" class="leftmar button">Изменить</a>
                <a href="{{ route('delete-post', $note->id) }}" class="button">Удалить</a>
+               <br>
             @endif
-         @endauth 
+         @endauth
 
-         @isset($note->filename)
-            <img src="{{ asset('/storage/'. $note->filename) }}" alt="articleImage" class="mask">
-         @endisset
+         <img id="image_{{$note->id}}" src="{{ asset('/storage/'. $note->filename) }}" alt=""class="mask">
          <h1 id="header_{{$note->id}}" class="h1 leftmar">{{$note->header}}</h1>
          <p id="created_{{$note->id}}">{{$note->created_at}}</p>
          <p id="content_{{$note->id}}">{{$note->content}}</p>
